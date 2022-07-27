@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -32,20 +33,12 @@ public class Thesis {
     private Date thesisDateOfDefense;
     private Integer thesisGrade;
     private Time thesisTermOfDefense;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "thesis_professor_map",
-            joinColumns = @JoinColumn(
-                    name = "thesis_id",
-                    referencedColumnName = "thesisId"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "professor_id",
-                    referencedColumnName = "profesorId"
-            )
+    @OneToMany(mappedBy = "thesis")
+    private Set<ThesisProfessorRole> thesisCommision;
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
-    private List<Professor> thesisCommision;
-    @OneToOne
     @JoinColumn(
             name = "thesis_student_id",
             referencedColumnName = "studentId"

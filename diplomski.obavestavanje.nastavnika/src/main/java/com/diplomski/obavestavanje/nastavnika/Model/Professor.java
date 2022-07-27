@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -20,22 +21,18 @@ import javax.persistence.*;
 public class Professor {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(
+            name = "professorId",
+            nullable = false
     )
-    private Long profesorId;
+    private Long professorId;
     @Column(
             name = "full_name",
             nullable = false
     )
     private String fullName;
-    @Column(
-            name = "role",
-            nullable = false
-    )
-    private String role;
 
-
-
-
+    @OneToMany(mappedBy = "thesisProfessor")
+    Set<ThesisProfessorRole> thesis;
 }

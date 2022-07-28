@@ -14,7 +14,6 @@ import java.util.Set;
 @Builder
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties
 @AllArgsConstructor
 @Table(
         name = "professor"
@@ -23,10 +22,7 @@ public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(
-            name = "professorId",
-            nullable = false
-    )
+    private Long Id;
     private Long professorId;
     @Column(
             name = "identification_number",

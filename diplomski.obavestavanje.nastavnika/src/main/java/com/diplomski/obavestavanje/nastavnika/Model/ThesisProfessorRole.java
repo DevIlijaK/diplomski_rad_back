@@ -23,8 +23,6 @@ public class ThesisProfessorRole {
     Thesis thesis;
 
     @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL
     )
     @MapsId("professorId")
     @JoinColumn(name = "professor_id")

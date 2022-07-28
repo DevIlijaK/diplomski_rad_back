@@ -9,7 +9,7 @@ import java.util.List;
 public interface ThesisRepository extends JpaRepository<Thesis, Long> {
     List<Thesis> findAllByThesisRegistrationDate(Date thesisRegistrationDate);
 
-    List<Thesis> findAllByThesisRegistrationDateBetween(
+    List<Thesis> findAllByThesisDateOfDefenseBetween(
             Date thesisReqistrationDateStart,
             Date thesisRegistrationDateEnd
     );

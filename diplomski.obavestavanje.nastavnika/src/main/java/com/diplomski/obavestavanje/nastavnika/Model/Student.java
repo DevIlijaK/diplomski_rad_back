@@ -14,15 +14,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @JsonIgnoreProperties
 @AllArgsConstructor
-@Table(
-        name = "student"
-)
 public class Student {
 
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
+    private Long Id;
     private Long studentId;
     @Column(
             nullable = false

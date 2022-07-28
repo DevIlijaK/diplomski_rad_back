@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +28,8 @@ public class ThesisService {
 
     @Transactional
     public void saveThesis(Thesis thesis) {
-        System.out.println(thesis);
         thesisRepository.save(thesis);
+        if(thesis.getThesisCommission() != null)
         thesis.getThesisCommission().forEach(commision -> {
             Professor professor =
                     Professor.builder()
@@ -36,7 +37,6 @@ public class ThesisService {
                             .identificationNumber(commision.getProfessor().getIdentificationNumber())
                             .fullName(commision.getProfessor().getFullName())
                             .build();
-            System.out.println(professor);
             Professor repositoryProfessor = professorRepository.findByIdentificationNumber(professor.getIdentificationNumber())
                     .orElseGet(() -> professorRepository.save(professor));
             ThesisProfessorRole thesisProfessorRole =
@@ -46,10 +46,12 @@ public class ThesisService {
                             .thesisProfessorRole(commision.getThesisProfessorRole())
                             .key(new ThesisProfessorRoleKey(thesis.getThesisId(), repositoryProfessor.getProfessorId() ))
                             .build();
-            System.out.println(thesisProfessorRole);
+
             thesisProfessorRoleRepository.save(thesisProfessorRole);
-
+            System.out.println("proslo");
         });
-
+    }
+    public List<Thesis>returnAllByThesisDateOfDefenseBetween(Date startDate, Date endDate){
+        return thesisRepository.findAllByThesisDateOfDefenseBetween(startDate, endDate);
     }
 }

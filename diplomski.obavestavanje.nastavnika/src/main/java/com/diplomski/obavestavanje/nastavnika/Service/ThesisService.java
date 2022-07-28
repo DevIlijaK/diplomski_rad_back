@@ -28,9 +28,8 @@ public class ThesisService {
                             .professorId(commision.getProfessor().getProfessorId())
                             .fullName(commision.getProfessor().getFullName())
                             .build();
-            Optional<Professor> repositoryProfessor = professorRepository.findByIdentificationNumber(professor.getIdentificationNumber()).orElse(
-                    () -> professorRepository.save(professor);
-         );
+            Professor repositoryProfessor = professorRepository.findByIdentificationNumber(professor.getIdentificationNumber())
+                    .orElseGet(() -> professorRepository.save(professor));
 
         });
 

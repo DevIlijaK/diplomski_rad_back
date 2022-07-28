@@ -27,14 +27,17 @@ public class Thesis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long thesisId;
     private String thesisType;
-    private String thesistitle;
+    private String thesisTitle;
     private Date thesisRegistrationDate;
-    private Date thesisDateOfSubmition;
+    private Date thesisDateOfSubmission ;
     private Date thesisDateOfDefense;
     private Integer thesisGrade;
     private Time thesisTermOfDefense;
-    @OneToMany(mappedBy = "thesis")
-    private Set<ThesisProfessorRole> thesisCommision;
+    @OneToMany(
+            mappedBy = "thesis",
+            cascade = CascadeType.ALL
+    )
+    private List<ThesisProfessorRole> thesisCommission;
     @OneToOne(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER

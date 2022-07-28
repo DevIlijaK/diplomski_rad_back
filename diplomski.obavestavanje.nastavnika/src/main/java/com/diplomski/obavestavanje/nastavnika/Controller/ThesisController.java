@@ -34,7 +34,8 @@ public class ThesisController {
         JsonNode jsonNode = (JsonNode) parsingService.parse(JSON_URL);
 
         List<Thesis> thesis = mapper.convertValue(jsonNode, new TypeReference<List<Thesis>>() { });
-        thesis.forEach(oneThesis -> thesisService.saveThesis(oneThesis));
+        System.out.println(thesis);
+//        thesis.forEach(oneThesis -> thesisService.saveThesis(oneThesis));
         return MAIN_PAGE;
     }
 }

@@ -1,8 +1,17 @@
 package com.diplomski.obavestavanje.nastavnika.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ThesisProfessorRole {
 
     @EmbeddedId
@@ -13,10 +22,13 @@ public class ThesisProfessorRole {
     @JoinColumn(name = "thesis_id")
     Thesis thesis;
 
-    @ManyToOne
+    @ManyToOne(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
     @MapsId("professorId")
     @JoinColumn(name = "professor_id")
-    Professor thesisProfessor;
+    Professor professor;
 
     String thesisProfessorRole;
 }

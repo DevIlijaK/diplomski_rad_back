@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,11 +29,14 @@ public class Professor {
     )
     private Long professorId;
     @Column(
+            name = "identification_number",
+            nullable = false
+    )
+    private String identificationNumber;
+    @Column(
             name = "full_name",
             nullable = false
     )
     private String fullName;
 
-    @OneToMany(mappedBy = "thesisProfessor")
-    Set<ThesisProfessorRole> thesis;
 }

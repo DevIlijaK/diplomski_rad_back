@@ -35,7 +35,7 @@ public class ThesisController {
 
         List<Thesis> thesis = mapper.convertValue(jsonNode, new TypeReference<List<Thesis>>() { });
         System.out.println(thesis);
-//        thesis.forEach(oneThesis -> thesisService.saveThesis(oneThesis));
+        thesis.forEach(oneThesis -> thesisService.saveThesis(oneThesis));
         return MAIN_PAGE;
     }
 }

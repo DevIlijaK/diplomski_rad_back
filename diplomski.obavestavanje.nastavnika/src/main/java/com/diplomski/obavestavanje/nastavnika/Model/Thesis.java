@@ -25,6 +25,7 @@ import java.util.Set;
 public class Thesis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private Long thesisId;
     private String thesisType;
     private String thesisTitle;
@@ -34,8 +35,7 @@ public class Thesis {
     private Integer thesisGrade;
     private Time thesisTermOfDefense;
     @OneToMany(
-            mappedBy = "thesis",
-            cascade = CascadeType.ALL
+            mappedBy = "thesis"
     )
     private List<ThesisProfessorRole> thesisCommission;
     @OneToOne(

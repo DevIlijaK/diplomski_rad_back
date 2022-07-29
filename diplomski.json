@@ -1,0 +1,84 @@
+{
+   "diplomski":[
+      {
+ 
+            "thesisId":"123",
+            "thesisType":"thesis",
+            "thesisTitle":"Razvoj veb aplikacije za obaveštavanje nastavnika o zakazanim odbranama završnih radova",
+            "thesisRegistrationDate":"2022-07-28",
+            "thesisDateOfSubmission":"2022-07-28",
+            "thesisDateOfDefense":"2022-07-28",
+            "thesisGrade":"",
+            "thesisTermOfDefense":"00:00:00",
+            "thesisCommission":[
+               {
+                  "professor":{
+                     "professorId":"1",
+                     "fullName":"Ilija"
+                  },
+                  "thesisProfessorRole":"comision member"
+               },
+               {
+                  "professor":{
+                     "professorId":"2",
+                     "fullName":"Ilija"
+                  },
+                  "thesisProfessorRole":"comision member"
+               },
+               {
+                  "professor":{
+                     "professorId":"3",
+                     "fullName":"Ilija"
+                  },
+                  "thesisProfessorRole":"mentor"
+               }
+            ],
+            "student":{
+               "studentId":"123",
+               "full_name":"Ilija",
+               "indexNumber":"123"
+            }
+  
+      },
+      {
+
+            "thesisId":"123",
+            "thesisType":"thesis",
+            "thesisTitle":"Razvoj veb aplikacije za obaveštavanje nastavnika o zakazanim odbranama završnih radova",
+            "thesisRegistrationDate":"2022-07-28",
+            "thesisDateOfSubmission":"2022-07-28",
+            "thesisDateOfDefense":"2022-07-28",
+            "thesisGrade":"",
+            "thesisTermOfDefense":"00:00:00",
+            "thesisCommission":[
+               {
+                  "professor":{
+                     "professorId":"11",
+                     "fullName":"Ilija"
+                  },
+                  "thesisProfessorRole":"comision member"
+               },
+               {
+                  "professor":{
+                     "professorId":"22",
+                     "fullName":"Ilija"
+                  },
+                  "thesisProfessorRole":"comision member"
+               },
+               {
+                  "professor":{
+                     "professorId":"33",
+                     "fullName":"Ilija"
+                  },
+                  "thesisProfessorRole":"mentor"
+               }
+            ],
+            "student":{
+               "studentId":"123",
+               "full_name":"Ilija",
+               "indexNumber":"123"
+            }
+         
+      }
+   ]
+}

@@ -1,10 +1,7 @@
 package com.diplomski.obavestavanje.nastavnika.Service;
 
 import com.diplomski.obavestavanje.nastavnika.Exception.ResourceNotFoundException;
-import com.diplomski.obavestavanje.nastavnika.Model.Professor;
-import com.diplomski.obavestavanje.nastavnika.Model.Thesis;
-import com.diplomski.obavestavanje.nastavnika.Model.ThesisProfessorRole;
-import com.diplomski.obavestavanje.nastavnika.Model.ThesisProfessorRoleKey;
+import com.diplomski.obavestavanje.nastavnika.Model.*;
 import com.diplomski.obavestavanje.nastavnika.Repository.ProfessorRepository;
 import com.diplomski.obavestavanje.nastavnika.Repository.ThesisProfessorRoleRepository;
 import com.diplomski.obavestavanje.nastavnika.Repository.ThesisRepository;
@@ -27,17 +24,27 @@ public class ThesisService {
     ThesisProfessorRoleRepository thesisProfessorRoleRepository;
 
     @Transactional
-    public void saveThesis(Thesis thesis) {
-        thesisRepository.save(thesis);
-        if(thesis.getThesisCommission() != null)
-        thesis.getThesisCommission().forEach(commision -> {
+    public void saveThesis(JsonModel object) {
+       Thesis thesis = Thesis.builder()
+               .thesisId(object.getThesisId())
+               .thesisType(object.getThesisType())
+               .thesisTitle(object.getThesisTitle())
+               .thesisRegistrationDate(object.getThesisRegistrationDate())
+               .thesisDateOfSubmission(object.getThesisDateOfSubmission())
+               .thesisDateOfDefense(object.getThesisDateOfDefense())
+               .thesisGrade(object.getThesisGrade())
+               .thesisTermOfDefense(object.getThesisTermOfDefense())
+               .student(object.getStudent())
+               .build();
+       thesisRepository.save(thesis);
+        if(object.getThesisCommission() != null)
+            object.getThesisCommission().forEach(commision -> {
             Professor professor =
                     Professor.builder()
                             .professorId(commision.getProfessor().getProfessorId())
-                            .identificationNumber(commision.getProfessor().getIdentificationNumber())
                             .fullName(commision.getProfessor().getFullName())
                             .build();
-            Professor repositoryProfessor = professorRepository.findByIdentificationNumber(professor.getIdentificationNumber())
+            Professor repositoryProfessor = professorRepository.findByProfessorId(professor.getProfessorId())
                     .orElseGet(() -> professorRepository.save(professor));
             ThesisProfessorRole thesisProfessorRole =
                     ThesisProfessorRole.builder()

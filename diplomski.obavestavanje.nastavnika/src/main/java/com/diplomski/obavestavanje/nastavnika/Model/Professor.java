@@ -25,11 +25,6 @@ public class Professor {
     private Long Id;
     private Long professorId;
     @Column(
-            name = "identification_number",
-            nullable = false
-    )
-    private String identificationNumber;
-    @Column(
             name = "full_name",
             nullable = false
     )

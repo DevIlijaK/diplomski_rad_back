@@ -15,8 +15,8 @@ public class ThesisRepositoryIntegrationTest {
     ThesisRepository thesisRepository;
 
 
-    @Test
-    List<Thesis> findAllByThesisDateOfDefenseBetweenTest () {
+//    @Test
+//    List<Thesis> findAllByThesisDateOfDefenseBetweenTest () {
 //        Thesis thesis = Thesis.builder()
 //                .thesisId
 //                .thesisType
@@ -31,7 +31,7 @@ public class ThesisRepositoryIntegrationTest {
 //        Date startDate = new Date(2022-11-22);
 //        Date endDate = new Date(2022-11-22);
 
-        return thesisRepository.findAllByThesisDateOfDefenseBetween(startDate, endDate);
-    }
+//        return thesisRepository.findAllByThesisDateOfDefenseBetween(startDate, endDate);
+//    }
 
 }

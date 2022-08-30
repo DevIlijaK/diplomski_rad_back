@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 @Builder
 @Data
@@ -21,6 +22,6 @@ public class JsonModel {
     private Date thesisDateOfSubmission ;
     private Date thesisDateOfDefense;
     private Integer thesisGrade;
-    private Time thesisTermOfDefense;
+    private List<ThesisProfessorRole> thesisCommission;
     private Student student;
 }

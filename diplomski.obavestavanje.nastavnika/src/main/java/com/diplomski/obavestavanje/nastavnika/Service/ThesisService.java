@@ -1,10 +1,7 @@
 package com.diplomski.obavestavanje.nastavnika.Service;
 
 import com.diplomski.obavestavanje.nastavnika.Exception.ResourceNotFoundException;
-import com.diplomski.obavestavanje.nastavnika.Model.Professor;
-import com.diplomski.obavestavanje.nastavnika.Model.Thesis;
-import com.diplomski.obavestavanje.nastavnika.Model.ThesisProfessorRole;
-import com.diplomski.obavestavanje.nastavnika.Model.ThesisProfessorRoleKey;
+import com.diplomski.obavestavanje.nastavnika.Model.*;
 import com.diplomski.obavestavanje.nastavnika.Repository.ProfessorRepository;
 import com.diplomski.obavestavanje.nastavnika.Repository.ThesisProfessorRoleRepository;
 import com.diplomski.obavestavanje.nastavnika.Repository.ThesisRepository;
@@ -27,10 +24,20 @@ public class ThesisService {
     ThesisProfessorRoleRepository thesisProfessorRoleRepository;
 
     @Transactional
-    public void saveThesis(Thesis thesis) {
+    public void saveThesis(JsonModel dataModel) {
+        Thesis thesis =
+                Thesis.builder()
+                        .thesisId(dataModel.getThesisId())
+                        .thesisType(dataModel.getThesisType())
+                        .thesisTitle(dataModel.getThesisTitle())
+                        .thesisRegistrationDate(dataModel.getThesisRegistrationDate())
+                        .thesisDateOfSubmission(dataModel.getThesisDateOfSubmission())
+                        .thesisDateOfDefense(dataModel.getThesisDateOfDefense())
+                        .thesisGrade(dataModel.getThesisGrade())
+//                        .thesisTermOfDefense(dataModel.getThesisTermOfDefense())
+                        .build();
         thesisRepository.save(thesis);
-        if(thesis.getThesisCommission() != null)
-        thesis.getThesisCommission().forEach(commision -> {
+        dataModel.getThesisCommission().forEach(commision -> {
             Professor professor =
                     Professor.builder()
                             .professorId(commision.getProfessor().getProfessorId())
@@ -53,5 +60,8 @@ public class ThesisService {
     }
     public List<Thesis>returnAllByThesisDateOfDefenseBetween(Date startDate, Date endDate){
         return thesisRepository.findAllByThesisDateOfDefenseBetween(startDate, endDate);
+    }
+    public List<Thesis> getAllThesis(){
+        return thesisRepository.findAll();
     }
 }

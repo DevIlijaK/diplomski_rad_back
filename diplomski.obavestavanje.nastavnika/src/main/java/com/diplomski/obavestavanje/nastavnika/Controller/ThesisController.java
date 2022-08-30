@@ -13,17 +13,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 import java.util.List;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class ThesisController {
 
     private static final String MAIN_PAGE = "main";
-    private static final String JSON_URL = "http://localhost:3000/diplomski";
+    private static final String JSON_URL = "http://localhost:3000/thesis";
 
     @Autowired
     private ParsingService parsingService;
@@ -37,10 +40,10 @@ public class ThesisController {
     public String main() {
 
         JsonNode jsonNode = (JsonNode) parsingService.parse(JSON_URL);
-
-        List<JsonModel> dataModel = mapper.convertValue(jsonNode, new TypeReference<List<JsonModel>>() { });
+        System.out.println(jsonNode);
+        JsonModel dataModel = mapper.convertValue(jsonNode, new TypeReference<JsonModel>() { });
         System.out.println(dataModel);
-        dataModel.forEach(object -> thesisService.saveThesis(object));
+        thesisService.saveThesis(dataModel);
         return MAIN_PAGE;
     }
     @GetMapping("find/{startPeriod}/{endPerion}")
@@ -49,5 +52,9 @@ public class ThesisController {
             @RequestParam("endPerion")Date endPerion){
         return thesisService.returnAllByThesisDateOfDefenseBetween(startPeriod,endPerion);
 
+    }
+    @GetMapping("get")
+    public List<Thesis> getThesis(){
+        return thesisService.getAllThesis();
     }
 }

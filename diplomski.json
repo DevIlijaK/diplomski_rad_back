@@ -1,0 +1,44 @@
+{
+   "thesis":{
+      "thesisId":"1",
+      "thesisType":"asd",
+      "thesisTitle":"asd",
+      "thesisRegistrationDate":"2012-04-23T18:25:43.511Z",
+      "thesisDateOfSubmission":"2012-04-23T18:25:43.511Z",
+      "thesisDateOfDefense":"2012-04-23T18:25:43.511Z",
+      "thesisGrade":"3",
+      "thesisCommission":[
+         {
+            "professor":{
+               "professorId":"3",
+               "identificationNumber":"123",
+               "fullName":"Dusan Savic1"
+            },
+            "role":"comision member"
+         },
+         {
+            "professor":{
+               "professorId":"1",
+               "identificationNumber":"456",
+               "fullName":"Dusan Savic1"
+            },
+            "role":"comision member"
+         },
+         {
+            "professor":{
+               "professorId":"2",
+               "identificationNumber":"789",
+               "fullName":"Dusan Savic1"
+            },
+            "role":"comision member"
+         }
+      ],
+      "student":{
+         "studentId":"123",
+         "full_name":"ilija koske",
+         "indexNumber":"1"
+      }
+   }
+}
+
+

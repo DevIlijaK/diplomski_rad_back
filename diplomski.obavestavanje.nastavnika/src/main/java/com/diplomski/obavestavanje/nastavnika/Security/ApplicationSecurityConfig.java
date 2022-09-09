@@ -24,9 +24,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
+      .csrf().disable() // TODO: I will teach this in detail in the next section
       .authorizeRequests()
-      .antMatchers("/login").permitAll()
-      .antMatchers("/api/**").hasRole(ApplicationUserRole.PROFESSOR.name())
+      .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+      .antMatchers("/api/**").hasRole(ApplicationUserRole.STUDENT.name())
+//                .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers(HttpMethod.POST, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
+//                .antMatchers("/management/api/**").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
       .anyRequest()
       .authenticated()
       .and()
@@ -36,11 +41,30 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   @Bean
   protected UserDetailsService userDetailsService() {
-    UserDetails ilija = User.builder()
-                            .username("ilija")
-                            .password(passwordEncoder.encode("123"))
-                            .roles(ApplicationUserRole.PROFESSOR.name())
-                            .build();
-    return new InMemoryUserDetailsManager(ilija);
+    UserDetails annaSmithUser = User.builder()
+                                    .username("annasmith")
+                                    .password(passwordEncoder.encode("password"))
+//                .roles(STUDENT.name()) // ROLE_STUDENT
+                                    .authorities(ApplicationUserRole.STUDENT.getGrantedAuthorities())
+                                    .build();
+
+    UserDetails lindaUser = User.builder()
+                                .username("linda")
+                                .password(passwordEncoder.encode("password123"))
+//                .roles(ADMIN.name()) // ROLE_ADMIN
+                                .authorities(ApplicationUserRole.ADMIN.getGrantedAuthorities())
+                                .build();
+
+    UserDetails tomUser = User.builder()
+                              .username("tom")
+                              .password(passwordEncoder.encode("password123"))
+//                .roles(ADMINTRAINEE.name()) // ROLE_ADMINTRAINEE
+                              .authorities(ApplicationUserRole.ADMINTRAINEE.getGrantedAuthorities())
+                              .build();
+    return new InMemoryUserDetailsManager(
+      annaSmithUser,
+      lindaUser,
+      tomUser
+    );
   }
 }

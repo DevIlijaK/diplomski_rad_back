@@ -1,10 +1,7 @@
 package com.diplomski.obavestavanje.nastavnika.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @JsonIgnoreProperties
 @AllArgsConstructor
+@ToString
 public class Student {
 
     @Id

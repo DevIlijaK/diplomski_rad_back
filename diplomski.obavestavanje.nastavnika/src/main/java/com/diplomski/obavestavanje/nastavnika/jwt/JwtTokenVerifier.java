@@ -6,6 +6,8 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,8 +24,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class JwtTokenVerifier extends OncePerRequestFilter {
+
+    private final JwtSecretKey secretKey;
+    private final JwtConfig jwtConfig;
 
 
     @Override
@@ -32,17 +37,16 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");
 
-        if (Strings.isNullOrEmpty(authorizationHeader) || authorizationHeader.startsWith("Bearer ")) {
+        if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith(jwtConfig.getTokenPrefix())) {
             filterChain.doFilter(request, response);
             return;
         }
-        String token = authorizationHeader.replace("Bearer ", "");
+        String token = authorizationHeader.replace(jwtConfig.getTokenPrefix(), "");
         try {
 
-            String secretKey = "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecure";
 
             Jws<Claims> claimsJws = Jwts.parserBuilder()
-                                        .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
+                                        .setSigningKey(secretKey.getSecretKey())
                                         .build()
                                         .parseClaimsJws(token);
             Claims body = claimsJws.getBody();
@@ -64,6 +68,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         }catch (JwtException e){
             throw new IllegalStateException(String.format("Tokien %s cannot be trusted", token));
         }
+        filterChain.doFilter(request,response);
 
     }
 }

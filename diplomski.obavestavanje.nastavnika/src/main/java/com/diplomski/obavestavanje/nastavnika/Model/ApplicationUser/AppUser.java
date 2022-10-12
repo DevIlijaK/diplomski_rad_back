@@ -12,7 +12,7 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicationUserSecond {
+public class AppUser {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;

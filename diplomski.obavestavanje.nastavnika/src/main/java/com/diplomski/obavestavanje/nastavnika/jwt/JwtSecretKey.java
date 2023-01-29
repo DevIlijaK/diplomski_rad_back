@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.crypto.SecretKey;
 
 @Configuration
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@AllArgsConstructor
 public class JwtSecretKey {
     private final JwtConfig jwtConfig;
     @Bean

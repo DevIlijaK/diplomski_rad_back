@@ -59,6 +59,10 @@ public class AppUserController {
         appUserService.addRoleToUser(form.getUsername(), form.getRoleName());
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/login")
+    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // The filter will handle the authentication process and return the token
+    }
     @PostMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -70,7 +74,6 @@ public class AppUserController {
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
                 AppUser appUser = appUserService.getUser(username);
-
                 String access_token = JWT.create()
                         .withSubject(appUser.getUsername()) //nesto posebno u vezi korisnika po emu moze da se identifikuje
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // vreme koliko ce token da traje 10min trenutno (u milisekundama je)

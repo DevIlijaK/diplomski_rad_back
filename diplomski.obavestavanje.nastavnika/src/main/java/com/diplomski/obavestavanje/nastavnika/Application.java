@@ -18,22 +18,4 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
-    @Bean
-    CommandLineRunner run(AppUserService appUserService) {
-        return args -> {
-            appUserService.saveRole(new Role(null, "ROLE_ADMIN"));
-            appUserService.saveRole(new Role(null, "ROLE_PROFESSOR"));
-            appUserService.saveRole(new Role(null, "ROLE_STUDENT"));
-
-            appUserService.saveUser(new AppUser(null, "ILija", "123", "123", new ArrayList<>()));
-            appUserService.saveUser(new AppUser(null, "asd", "qwe", "qwe", new ArrayList<>()));
-            appUserService.saveUser(new AppUser(null, "zxc", "asd", "asd", new ArrayList<>()));
-            appUserService.saveUser(new AppUser(null, "123", "zxc", "zxc", new ArrayList<>()));
-
-            appUserService.addRoleToUser("123", "ROLE_ADMIN");
-        };
-    }
-
-
 }

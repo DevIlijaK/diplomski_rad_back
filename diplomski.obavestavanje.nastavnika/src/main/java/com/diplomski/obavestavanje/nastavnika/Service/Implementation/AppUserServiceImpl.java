@@ -3,8 +3,8 @@ package com.diplomski.obavestavanje.nastavnika.Service.Implementation;
 
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.AppUser;
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.Role;
-import com.diplomski.obavestavanje.nastavnika.Repository.AppUserRepository;
-import com.diplomski.obavestavanje.nastavnika.Repository.RoleRepository;
+import com.diplomski.obavestavanje.nastavnika.Repository.auth.AppUserRepository;
+import com.diplomski.obavestavanje.nastavnika.Repository.auth.RoleRepository;
 import com.diplomski.obavestavanje.nastavnika.Service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
             log.error("User with username {} not found in database", username);
             throw new UsernameNotFoundException("User not found in database");
         } else {
-            log.error("User found in database");
+            log.info("User found in database");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         appUser.getRoles().forEach(role -> {

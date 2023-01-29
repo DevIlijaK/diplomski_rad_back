@@ -3,11 +3,15 @@ package com.diplomski.obavestavanje.nastavnika.Security.filter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.AppUser;
+import com.diplomski.obavestavanje.nastavnika.Model.auth.UsernameAndPasswordAuthenticationRequest;
 import com.diplomski.obavestavanje.nastavnika.jwt.JwtSecretKey;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -32,19 +36,37 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtSecretKey jwtSecretKey;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        /**
-         * Iz requesta uzimamo username i password pravimo objekat tipa UsernamePasswordAuthenticationToken
-         * i pozivamo authenticationManager da uradi autentifikaciju
-         */
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        log.info("Username is: {}", username);
-        log.info("Password is: {}", password);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        try {
+            log.info("Stiglo");
+            UsernameAndPasswordAuthenticationRequest authRequest = getAuthRequest(request);
+            logAuthRequestDetails(authRequest);
+            UsernamePasswordAuthenticationToken authenticationToken = createAuthenticationToken(authRequest);
+            return authenticate(authenticationToken);
+        } catch (IOException e) {
+            log.error("An IO error occurred while trying to authenticate the user: {}", e.getMessage());
+            throw new AuthenticationServiceException("An error occurred while trying to authenticate the user", e);
+        }
+    }
+
+    private UsernameAndPasswordAuthenticationRequest getAuthRequest(HttpServletRequest request) throws IOException {
+        return objectMapper.readValue(request.getInputStream(), UsernameAndPasswordAuthenticationRequest.class);
+    }
+
+    private void logAuthRequestDetails(UsernameAndPasswordAuthenticationRequest authRequest) {
+        log.info("Username is: {}", authRequest.getUsername());
+        log.info("Password is: {}", authRequest.getPassword());
+    }
+
+    private UsernamePasswordAuthenticationToken createAuthenticationToken(UsernameAndPasswordAuthenticationRequest authRequest) {
+        return new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
+    }
+
+    private Authentication authenticate(UsernamePasswordAuthenticationToken authenticationToken) {
         return authenticationManager.authenticate(authenticationToken);
     }
 
@@ -52,24 +74,32 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User appUser = (User) authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256(jwtSecretKey.getSecretKey().toString());
-        String access_token = JWT.create()
-                .withSubject(appUser.getUsername()) //nesto posebno u vezi korisnika po emu moze da se identifikuje
-                .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // vreme koliko ce token da traje 10min trenutno (u milisekundama je)
-                .withIssuer(request.getRequestURL().toString()) // ko je izdao token
+        String accessToken = createAccessToken(appUser, algorithm, request);
+        String refreshToken = createRefreshToken(appUser, algorithm, request);
+
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("access_token", accessToken);
+        tokens.put("refresh_token", refreshToken);
+        response.setContentType(APPLICATION_JSON_VALUE);
+        objectMapper.writeValue(response.getOutputStream(), tokens);
+    }
+
+    private String createAccessToken(User appUser, Algorithm algorithm, HttpServletRequest request) {
+        long accessTokenExpiration = 10 * 60 * 1000;
+        return JWT.create()
+                .withSubject(appUser.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + accessTokenExpiration))
+                .withIssuer(request.getRequestURL().toString())
                 .withClaim("roles", appUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(algorithm);
-        String refresh_token = JWT.create()
-                .withSubject(appUser.getUsername()) //nesto posebno u vezi korisnika po emu moze da se identifikuje
-                .withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000)) // vreme koliko ce token da traje 10min trenutno (u milisekundama je)
-                .withIssuer(request.getRequestURL().toString()) // ko je izdao token
+    }
+
+    private String createRefreshToken(User appUser, Algorithm algorithm, HttpServletRequest request) {
+        long refreshTokenExpiration = 30 * 60 * 1000;
+        return JWT.create()
+                .withSubject(appUser.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + refreshTokenExpiration))
+                .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
-
-        //pravimo mapu koja ce da sadrzi ova dva tokena i onda je upisujemo u body respons-a u json formatu
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", access_token);
-        tokens.put("refresh_token", refresh_token);
-        response.setContentType(APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-
     }
 }

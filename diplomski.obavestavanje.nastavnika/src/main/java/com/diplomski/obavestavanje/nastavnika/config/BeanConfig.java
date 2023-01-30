@@ -30,12 +30,9 @@ public class BeanConfig {
             appUserService.saveRole(new Role(null, "ROLE_PROFESSOR"));
             appUserService.saveRole(new Role(null, "ROLE_STUDENT"));
 
-            appUserService.saveUser(new AppUser(null, "ILija", "123", "123", new ArrayList<>()));
-            appUserService.saveUser(new AppUser(null, "asd", "qwe", "qwe", new ArrayList<>()));
-            appUserService.saveUser(new AppUser(null, "zxc", "asd", "asd", new ArrayList<>()));
-            appUserService.saveUser(new AppUser(null, "123", "zxc", "zxc", new ArrayList<>()));
+            appUserService.saveUser(new AppUser(null, "asd", "asd", "asd", "asd", "asd", new ArrayList<>()));
 
-            appUserService.addRoleToUser("123", "ROLE_ADMIN");
+            appUserService.addRoleToUser("asd", "ROLE_ADMIN");
         };
     }
 }

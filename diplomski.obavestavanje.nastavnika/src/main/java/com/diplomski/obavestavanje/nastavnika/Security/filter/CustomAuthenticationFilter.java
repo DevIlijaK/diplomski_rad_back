@@ -4,12 +4,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.AppUser;
 import com.diplomski.obavestavanje.nastavnika.Model.auth.UsernameAndPasswordAuthenticationRequest;
+import com.diplomski.obavestavanje.nastavnika.Service.Implementation.AppUserServiceImpl;
+import com.diplomski.obavestavanje.nastavnika.dto.AppUserDTO;
 import com.diplomski.obavestavanje.nastavnika.jwt.JwtSecretKey;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,14 +37,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     private final AuthenticationManager authenticationManager;
     private final JwtSecretKey jwtSecretKey;
     private final ObjectMapper objectMapper = new ObjectMapper();
-
+    private final AppUserServiceImpl appUserService;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            log.info("Stiglo");
             UsernameAndPasswordAuthenticationRequest authRequest = getAuthRequest(request);
-            logAuthRequestDetails(authRequest);
             UsernamePasswordAuthenticationToken authenticationToken = createAuthenticationToken(authRequest);
             return authenticate(authenticationToken);
         } catch (IOException e) {
@@ -57,11 +55,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         return objectMapper.readValue(request.getInputStream(), UsernameAndPasswordAuthenticationRequest.class);
     }
 
-    private void logAuthRequestDetails(UsernameAndPasswordAuthenticationRequest authRequest) {
-        log.info("Username is: {}", authRequest.getUsername());
-        log.info("Password is: {}", authRequest.getPassword());
-    }
-
     private UsernamePasswordAuthenticationToken createAuthenticationToken(UsernameAndPasswordAuthenticationRequest authRequest) {
         return new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
     }
@@ -71,15 +64,28 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-        User appUser = (User) authentication.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256(jwtSecretKey.getSecretKey().toString());
-        String accessToken = createAccessToken(appUser, algorithm, request);
-        String refreshToken = createRefreshToken(appUser, algorithm, request);
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authentication) throws IOException, ServletException {
 
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("access_token", accessToken);
-        tokens.put("refresh_token", refreshToken);
+        User user = (User) authentication.getPrincipal();
+        Algorithm algorithm = Algorithm.HMAC256(jwtSecretKey.getSecretKey().toString());
+        String accessToken = createAccessToken(user, algorithm, request);
+        String refreshToken = createRefreshToken(user, algorithm, request);
+        AppUser appUser = appUserService.getUser(((User)authentication.getPrincipal()).getUsername());
+        AppUserDTO appUserDto = AppUserDTO.builder()
+                .firstname(appUser.getFirstname())
+                .lastname(appUser.getLastname())
+                .roles(appUser.getRoles())
+                .email(appUser.getEmail())
+                .username(appUser.getUsername())
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
+        Map<String, Object> tokens = new HashMap<>();
+        tokens.put("appUser", appUserDto);
         response.setContentType(APPLICATION_JSON_VALUE);
         objectMapper.writeValue(response.getOutputStream(), tokens);
     }

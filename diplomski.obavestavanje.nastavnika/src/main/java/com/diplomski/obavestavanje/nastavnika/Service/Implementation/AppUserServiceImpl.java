@@ -6,8 +6,10 @@ import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.Role;
 import com.diplomski.obavestavanje.nastavnika.Repository.auth.AppUserRepository;
 import com.diplomski.obavestavanje.nastavnika.Repository.auth.RoleRepository;
 import com.diplomski.obavestavanje.nastavnika.Service.AppUserService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,11 +23,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@AllArgsConstructor
 @Slf4j
 public class AppUserServiceImpl implements AppUserService, UserDetailsService {
-
     private final AppUserRepository appUserRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -49,7 +50,7 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
 
     @Override
     public AppUser saveUser(AppUser user) {
-        log.info("Saving new user {} to database", user.getName());
+        log.info("Saving new user {} to database", user.getUsername());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return appUserRepository.save(user);
     }

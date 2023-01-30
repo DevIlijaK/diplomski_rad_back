@@ -24,38 +24,39 @@ import org.springframework.security.web.session.SessionManagementFilter;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
-  /**
-   * Nisam siguran za ovaj Bean
-   */
-  private final PasswordEncoder passwordEncoder;
-  private final AppUserServiceImpl appUserService;
-//  private final JwtConfig jwtConfig;
-  private final JwtSecretKey jwtSecretKey;
-  @Autowired
-  private CustomCorsFilter customCorsFilter;
+    /**
+     * Nisam siguran za ovaj Bean
+     */
+    private final PasswordEncoder passwordEncoder;
+    private final AppUserServiceImpl appUserService;
+    //  private final JwtConfig jwtConfig;
+    private final JwtSecretKey jwtSecretKey;
+    @Autowired
+    private CustomCorsFilter customCorsFilter;
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtSecretKey);
-    customAuthenticationFilter.setFilterProcessesUrl("/api/user/login");
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtSecretKey, appUserService);
+        customAuthenticationFilter.setFilterProcessesUrl("/api/user/login");
 
-    http.cors().and().csrf().disable();
-    http.addFilterBefore(customCorsFilter, SessionManagementFilter.class);
-    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    http.authorizeRequests().antMatchers("/api/login/**", "/api/user/token/refresh/**").permitAll();
+        http.cors().and().csrf().disable();
+        http.addFilterBefore(customCorsFilter, SessionManagementFilter.class);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().antMatchers("/api/login/**", "/api/user/token/refresh/**").permitAll();
 //    http.authorizeRequests().antMatchers("/api/user/**").hasAuthority("ROLE_ADMIN");
-    http.authorizeRequests().anyRequest().authenticated();
-    http.addFilter(customAuthenticationFilter);
-    http.addFilterBefore(new CustomAuthorizationFilter(jwtSecretKey), UsernamePasswordAuthenticationFilter.class);
-  }
+        http.authorizeRequests().anyRequest().authenticated();
+        http.addFilter(customAuthenticationFilter);
+        http.addFilterBefore(new CustomAuthorizationFilter(jwtSecretKey), UsernamePasswordAuthenticationFilter.class);
+    }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(appUserService).passwordEncoder(passwordEncoder);
-  }
-  @Bean
-  @Override
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(appUserService).passwordEncoder(passwordEncoder);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 }

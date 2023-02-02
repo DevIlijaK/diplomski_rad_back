@@ -7,6 +7,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.AppUser;
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.Role;
 import com.diplomski.obavestavanje.nastavnika.Service.AppUserService;
+import com.diplomski.obavestavanje.nastavnika.Service.Implementation.JWTTokenGenerateServiceImpl;
 import com.diplomski.obavestavanje.nastavnika.jwt.JwtSecretKey;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -15,6 +16,7 @@ import io.jsonwebtoken.Jwts;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 @CrossOrigin(origins = "http://localhost:4200")
+@Slf4j
 public class AppUserController {
     private final AppUserService appUserService;
     private final JwtSecretKey jwtSecretKey;
@@ -70,11 +73,11 @@ public class AppUserController {
     }
 
     @PostMapping("/token/refresh")
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+    public void refreshToken(@RequestBody String refreshToken, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.info("Refresh token" + refreshToken);
+        if (refreshToken != null && refreshToken.startsWith("Bearer ")) {
             try {
-                String refresh_token = authorizationHeader.substring("Bearer ".length());
+                String refresh_token = refreshToken.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256(jwtSecretKey.getSecretKey().toString());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
@@ -86,6 +89,9 @@ public class AppUserController {
                         .withIssuer(request.getRequestURL().toString()) // ko je izdao token
                         .withClaim("roles", appUser.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
                         .sign(algorithm);
+                /**
+                 * Mozda ubacim ovde da se generise i novi refresh token...
+                 */
                 //pravimo mapu koja ce da sadrzi ova dva tokena i onda je upisujemo u body respons-a u json formatu
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", access_token);

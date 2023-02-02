@@ -4,6 +4,7 @@ import com.diplomski.obavestavanje.nastavnika.Security.filter.CustomAuthenticati
 import com.diplomski.obavestavanje.nastavnika.Security.filter.CustomAuthorizationFilter;
 import com.diplomski.obavestavanje.nastavnika.Security.filter.CustomCorsFilter;
 import com.diplomski.obavestavanje.nastavnika.Service.Implementation.AppUserServiceImpl;
+import com.diplomski.obavestavanje.nastavnika.Service.Implementation.JWTTokenGenerateServiceImpl;
 import com.diplomski.obavestavanje.nastavnika.jwt.JwtSecretKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtSecretKey jwtSecretKey;
     @Autowired
     private CustomCorsFilter customCorsFilter;
+    private final JWTTokenGenerateServiceImpl jwtTokenGenerateService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtSecretKey, appUserService);
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtSecretKey, appUserService, jwtTokenGenerateService);
         customAuthenticationFilter.setFilterProcessesUrl("/api/user/login");
 
         http.cors().and().csrf().disable();

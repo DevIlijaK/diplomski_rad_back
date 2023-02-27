@@ -10,13 +10,15 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @Builder
-public class AppUserDTO implements java.io.Serializable {
+public class AppLoggedInUserDTO implements java.io.Serializable {
 
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 1L;
 
     private String firstname;
     private String lastname;
     private String username;
     private String email;
     private Collection<Role> roles;
+    private String accessToken;
+    private String refreshToken;
 }

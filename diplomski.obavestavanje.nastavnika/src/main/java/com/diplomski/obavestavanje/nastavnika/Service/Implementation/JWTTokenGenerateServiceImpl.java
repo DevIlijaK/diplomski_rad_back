@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class JWTTokenGenerateServiceImpl implements JWTTokenGenerateService {
     public String createAccessToken(User appUser, Algorithm algorithm, HttpServletRequest request) {
-        long accessTokenExpiration = 10 * 60 * 10;
+        long accessTokenExpiration = 10 * 60;
         return JWT.create()
                 .withSubject(appUser.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + accessTokenExpiration))

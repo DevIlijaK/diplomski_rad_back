@@ -44,7 +44,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         http.addFilterBefore(customCorsFilter, SessionManagementFilter.class);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/api/login/**", "/api/user/token/refresh/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/login/**", "/api/user/token/refresh/**", "/h2").permitAll();
 //    http.authorizeRequests().antMatchers("/api/user/**").hasAuthority("ROLE_ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);

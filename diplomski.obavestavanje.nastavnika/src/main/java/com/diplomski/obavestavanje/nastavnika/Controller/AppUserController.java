@@ -7,13 +7,12 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.AppUser;
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.Role;
 import com.diplomski.obavestavanje.nastavnika.Service.AppUserService;
-import com.diplomski.obavestavanje.nastavnika.Service.Implementation.JWTTokenGenerateServiceImpl;
+import com.diplomski.obavestavanje.nastavnika.dto.AppUserDTO;
+import com.diplomski.obavestavanje.nastavnika.dto.requests.EditAppUserRequest;
+import com.diplomski.obavestavanje.nastavnika.dto.requests.GetAppUsersRequest;
+import com.diplomski.obavestavanje.nastavnika.dto.response.AppUsersSearchResponse;
 import com.diplomski.obavestavanje.nastavnika.jwt.JwtSecretKey;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.net.URI;
 import java.util.*;
@@ -43,9 +41,14 @@ public class AppUserController {
     private final AppUserService appUserService;
     private final JwtSecretKey jwtSecretKey;
 
-    @GetMapping("/get-users")
-    public ResponseEntity<List<AppUser>> getUsers() {
-        return ResponseEntity.ok().body(appUserService.getUsers());
+    /**
+     * Ova ruta mora da se zastiti da samoa dmin moze da joj pristupi
+     *
+     * @return
+     */
+    @PostMapping("/get-users")
+    public ResponseEntity<AppUsersSearchResponse> getUsers(@RequestBody GetAppUsersRequest getAppUsersRequest) {
+        return ResponseEntity.ok().body(appUserService.getUsers(getAppUsersRequest));
     }
 
     @PostMapping("/save")
@@ -113,14 +116,27 @@ public class AppUserController {
             throw new RuntimeException("Refresh token is missing");
         }
     }
-        @GetMapping("/logout")
-        public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
-            String authorizationHeader = request.getHeader(AUTHORIZATION);
-            if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            }
-            return ResponseEntity.status(HttpStatus.OK).build();
+
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("get-roles")
+    public ResponseEntity<List<Role>> getAppUserRoles() {
+        return ResponseEntity.ok().body(appUserService.getAppUserRoles());
+    }
+
+    @PutMapping("/update-user")
+    public ResponseEntity<Map<String, String>> updateUser(@RequestBody EditAppUserRequest editAppUserRequest) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", appUserService.updateAppUser(editAppUserRequest));
+        return ResponseEntity.ok().body(response);
+    }
 
     @Data
     static

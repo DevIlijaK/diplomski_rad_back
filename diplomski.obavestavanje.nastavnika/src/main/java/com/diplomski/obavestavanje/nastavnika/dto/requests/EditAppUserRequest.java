@@ -1,4 +1,4 @@
-package com.diplomski.obavestavanje.nastavnika.dto;
+package com.diplomski.obavestavanje.nastavnika.dto.requests;
 
 import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.Role;
 import lombok.AllArgsConstructor;
@@ -10,10 +10,8 @@ import java.util.Collection;
 @Data
 @AllArgsConstructor
 @Builder
-public class AppUserDTO implements java.io.Serializable {
-
-    private static final long serialVersionUID = 2L;
-
+public class EditAppUserRequest implements java.io.Serializable{
+    private static final long serialVersionUID = 260220231836L;
     private String firstname;
     private String lastname;
     private String username;

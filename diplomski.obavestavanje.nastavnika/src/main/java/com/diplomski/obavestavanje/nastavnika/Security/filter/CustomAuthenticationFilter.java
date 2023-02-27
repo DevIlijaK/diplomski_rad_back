@@ -5,7 +5,7 @@ import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.AppUser;
 import com.diplomski.obavestavanje.nastavnika.Model.auth.UsernameAndPasswordAuthenticationRequest;
 import com.diplomski.obavestavanje.nastavnika.Service.Implementation.AppUserServiceImpl;
 import com.diplomski.obavestavanje.nastavnika.Service.Implementation.JWTTokenGenerateServiceImpl;
-import com.diplomski.obavestavanje.nastavnika.dto.AppUserDTO;
+import com.diplomski.obavestavanje.nastavnika.dto.AppLoggedInUserDTO;
 import com.diplomski.obavestavanje.nastavnika.jwt.JwtSecretKey;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +73,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String accessToken = jwtTokenGenerateService.createAccessToken(user, algorithm, request);
         String refreshToken = jwtTokenGenerateService.createRefreshToken(user, algorithm, request);
         AppUser appUser = appUserService.getUser(((User)authentication.getPrincipal()).getUsername());
-        AppUserDTO appUserDto = AppUserDTO.builder()
+        AppLoggedInUserDTO appUserDto = AppLoggedInUserDTO.builder()
                 .firstname(appUser.getFirstname())
                 .lastname(appUser.getLastname())
                 .roles(appUser.getRoles())

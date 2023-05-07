@@ -1,13 +1,8 @@
 package com.diplomski.obavestavanje.nastavnika.Repository;
 
-import com.diplomski.obavestavanje.nastavnika.Model.Thesis;
-import org.junit.jupiter.api.Test;
+import com.diplomski.obavestavanje.nastavnika.repository.ThesisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 @SpringBootTest
 public class ThesisRepositoryIntegrationTest {

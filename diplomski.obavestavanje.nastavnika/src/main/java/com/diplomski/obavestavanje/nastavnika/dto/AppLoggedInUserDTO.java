@@ -1,6 +1,6 @@
 package com.diplomski.obavestavanje.nastavnika.dto;
 
-import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.Role;
+import com.diplomski.obavestavanje.nastavnika.model.ApplicationUser.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

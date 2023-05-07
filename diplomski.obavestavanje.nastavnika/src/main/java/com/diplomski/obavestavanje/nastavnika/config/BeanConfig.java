@@ -1,9 +1,9 @@
 package com.diplomski.obavestavanje.nastavnika.config;
 
 
-import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.AppUser;
-import com.diplomski.obavestavanje.nastavnika.Model.ApplicationUser.Role;
-import com.diplomski.obavestavanje.nastavnika.Service.AppUserService;
+import com.diplomski.obavestavanje.nastavnika.model.ApplicationUser.AppUser;
+import com.diplomski.obavestavanje.nastavnika.model.ApplicationUser.Role;
+import com.diplomski.obavestavanje.nastavnika.service.AppUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

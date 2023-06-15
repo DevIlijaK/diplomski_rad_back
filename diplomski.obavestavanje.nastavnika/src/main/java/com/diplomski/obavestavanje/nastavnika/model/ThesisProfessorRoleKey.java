@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class ThesisProfessorRoleKey implements Serializable {
 
     @Column(name = "thesis_id")
-    Long thesisId;
+    String thesisId;
 
     @Column(name = "professor_id")
     Long professorId;

@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonIgnoreProperties
 public class JsonModel {
-    private Long thesisId;
+    private String thesisId;
     private String thesisType;
     private String thesisTitle;
     private Date thesisRegistrationDate;

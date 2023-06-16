@@ -8,7 +8,6 @@ import java.util.List;
 public class StudentMapper {
     public static Student toStudent(StudentDTO dto) {
         Student student = new Student();
-        student.setId(dto.getStudentId());
         student.setStudentId(dto.getStudentId());
         student.setFullName(dto.getFull_name());
         student.setIndexNumber(dto.getIndexNumber());
@@ -17,7 +16,7 @@ public class StudentMapper {
 
     public static StudentDTO toStudentDTO(Student student) {
         StudentDTO dto = new StudentDTO();
-        dto.setStudentId(student.getId());
+        dto.setStudentId(student.getStudentId());
         dto.setFull_name(student.getFullName());
         dto.setIndexNumber(student.getIndexNumber());
         return dto;

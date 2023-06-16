@@ -17,7 +17,7 @@ public class Professor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long professorId;
+    private String professorId;
 
     private String identificationNumber;
     private String fullName;

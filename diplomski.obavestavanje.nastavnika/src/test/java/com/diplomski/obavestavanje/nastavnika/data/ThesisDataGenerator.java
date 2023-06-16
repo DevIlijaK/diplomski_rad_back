@@ -38,7 +38,7 @@ public class ThesisDataGenerator {
 
         for (int i = 0; i < 3; i++) {
             ProfessorDTO professorDTO = ProfessorDTO.builder()
-                    .professorId(random.nextLong())
+                    .professorId("test")
                     .identificationNumber("ID-" + random.nextInt(1000))
                     .fullName("Professor " + random.nextInt(10))
                     .build();
@@ -60,7 +60,7 @@ public class ThesisDataGenerator {
         // Generate a random StudentDTO object
 
         return StudentDTO.builder()
-                .studentId(random.nextLong())
+                .studentId("random")
                 .full_name("Student " + random.nextInt(10))
                 .indexNumber("Index " + random.nextInt(1000))
                 .build();
@@ -68,13 +68,13 @@ public class ThesisDataGenerator {
 
     public static List<Thesis> generateSampleTheses() {
         Student student = Student.builder()
-                .studentId(1L)
+                .studentId("test")
                 .fullName("John Doe")
                 .indexNumber("123456")
                 .build();
 
         Professor professor = Professor.builder()
-                .professorId(1L)
+                .professorId("test")
                 .identificationNumber("12345")
                 .fullName("John Doe")
                 .build();

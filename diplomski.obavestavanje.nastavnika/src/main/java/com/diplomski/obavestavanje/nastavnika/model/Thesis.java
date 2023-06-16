@@ -29,8 +29,8 @@ public class Thesis {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "thesis")
     private List<ThesisCommission> thesisCommission;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "student_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "studentId")
     private Student student;
 
     @Override

@@ -20,11 +20,11 @@ public class ThesisCommission {
     private String role;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "thesis_id")
+    @JoinColumn(name = "thesisId")
     private Thesis thesis;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "professor_id")
+    @ManyToOne
+    @JoinColumn(name = "professorId")
     private Professor professor;
 
     // Constructors, getters, and setters

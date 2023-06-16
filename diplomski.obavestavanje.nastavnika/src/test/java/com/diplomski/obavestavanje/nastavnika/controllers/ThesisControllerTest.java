@@ -68,7 +68,7 @@ public class ThesisControllerTest {
         when(parsingService.parse(any(String.class))).thenReturn(jsonNode);
 
         // Perform the method call
-        yourController.main();
+//        yourController.main();
 
         // Verify that the necessary operations were performed
         verify(parsingService).parse(JSON_URL);

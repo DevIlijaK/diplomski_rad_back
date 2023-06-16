@@ -12,9 +12,9 @@ import java.util.List;
 public class StudentManagementController {
 
   private static final List<Student> STUDENTS = Arrays.asList(
-    new Student(1L, 2L, "Ilija", "123"),
-    new Student(1L, 2L, "Loodak", "123"),
-    new Student(1L, 2L, "123", "123")
+    new Student(1L, "test", "Ilija", "123"),
+    new Student(1L, "test", "Loodak", "123"),
+    new Student(1L, "test", "123", "123")
     );
 
 //    hasRole('ROLE_') hasAnyRole('ROLE_') hasAuthority('permission') hasAnyAuthority('permission')

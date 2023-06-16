@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfessorDTO {
-    private Long professorId;
+    private String professorId;
     private String identificationNumber;
     private String fullName;
 }

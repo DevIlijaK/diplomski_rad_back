@@ -1,0 +1,18 @@
+[
+  {
+    "studentId": "S1",
+    "full_name": "John Doe",
+    "indexNumber": "123456"
+  },
+  {
+    "studentId": "S2",
+    "full_name": "Jane Smith",
+    "indexNumber": "654321"
+  },
+  {
+    "studentId": "S3",
+    "full_name": "Alex Johnson",
+    "indexNumber": "987654"
+  }
+]
+

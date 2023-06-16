@@ -1,7 +1,9 @@
 package com.diplomski.obavestavanje.nastavnika.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -17,7 +19,7 @@ public class Student {
             strategy = GenerationType.IDENTITY
     )
     private Long Id;
-    private Long studentId;
+    private String studentId;
     @Column(
             nullable = false
     )
@@ -26,6 +28,5 @@ public class Student {
             nullable = false
     )
     private String indexNumber;
-
 
 }

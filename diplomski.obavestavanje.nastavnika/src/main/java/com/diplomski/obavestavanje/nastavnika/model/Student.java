@@ -9,9 +9,7 @@ import javax.persistence.*;
 @Data
 @Builder
 @NoArgsConstructor
-@JsonIgnoreProperties
 @AllArgsConstructor
-@ToString
 public class Student {
 
     @Id
@@ -23,7 +21,7 @@ public class Student {
     @Column(
             nullable = false
     )
-    private String full_name;
+    private String fullName;
     @Column(
             nullable = false
     )

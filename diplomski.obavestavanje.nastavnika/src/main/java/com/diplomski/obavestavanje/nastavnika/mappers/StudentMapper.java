@@ -10,7 +10,7 @@ public class StudentMapper {
         Student student = new Student();
         student.setId(dto.getStudentId());
         student.setStudentId(dto.getStudentId());
-        student.setFull_name(dto.getFull_name());
+        student.setFullName(dto.getFull_name());
         student.setIndexNumber(dto.getIndexNumber());
         return student;
     }
@@ -18,7 +18,7 @@ public class StudentMapper {
     public static StudentDTO toStudentDTO(Student student) {
         StudentDTO dto = new StudentDTO();
         dto.setStudentId(student.getId());
-        dto.setFull_name(student.getFull_name());
+        dto.setFull_name(student.getFullName());
         dto.setIndexNumber(student.getIndexNumber());
         return dto;
     }

@@ -92,11 +92,6 @@ public class ThesisServiceImpl implements ThesisService {
                 return thesisRepository.saveAndFlush(existingThesis);
             }
         }
-//        Student existingStudent = studentRepository.findByStudentId(thesis.getStudent().getStudentId());
-//        if (existingStudent != null) {
-//            student = entityManager.merge(existingStudent);
-//        }
-
         return thesisRepository.saveAndFlush(thesis);
     }
 

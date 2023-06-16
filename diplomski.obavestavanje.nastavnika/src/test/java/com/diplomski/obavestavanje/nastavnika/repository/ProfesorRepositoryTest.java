@@ -1,4 +1,4 @@
-package com.diplomski.obavestavanje.nastavnika.Repository;
+package com.diplomski.obavestavanje.nastavnika.repository;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -39,15 +39,13 @@ public class ThesisController {
     @Scheduled(cron = "*/10 * * * * *")
     public void main() {
 
-        JsonNode jsonNode = (JsonNode) parsingService.parse(JSON_URL);
-        System.out.println(jsonNode);
-        ThesisDTO thesisDTO = mapper.convertValue(jsonNode, ThesisDTO.class);
-        Thesis thesis = ThesisMapper.toThesis(thesisDTO);
-        System.out.println("THESISSSS: " + thesis.toString());
-        List<Thesis> theses = thesisService.filterDuplicates(List.of(thesis));
-        System.out.println("THESISSSS: " + theses.get(0));
-//        Thesis thesis1 = thesisService.saveThesis(theses.get(0));
-//        System.out.println("SACUVANA: " + thesis1);
+//        JsonNode jsonNode = (JsonNode) parsingService.parse(JSON_URL);
+//        System.out.println(jsonNode);
+//        ThesisDTO thesisDTO = mapper.convertValue(jsonNode, ThesisDTO.class);
+//        Thesis thesis = ThesisMapper.toThesis(thesisDTO);
+//        System.out.println("THESISSSS: " + thesis.toString());
+//        List<Thesis> theses = thesisService.filterDuplicates(List.of(thesis));
+//        System.out.println("THESISSSS: " + theses.get(0));
     }
     @GetMapping("find/{startPeriod}/{endPerion}")
     public List<Thesis> returnAllByThesisDateOfDefenseBetween(

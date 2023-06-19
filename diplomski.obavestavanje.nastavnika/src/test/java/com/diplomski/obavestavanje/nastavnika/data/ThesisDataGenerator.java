@@ -39,8 +39,6 @@ public class ThesisDataGenerator {
         for (int i = 0; i < 3; i++) {
             ProfessorDTO professorDTO = ProfessorDTO.builder()
                     .professorId("test")
-                    .identificationNumber("ID-" + random.nextInt(1000))
-                    .fullName("Professor " + random.nextInt(10))
                     .build();
 
             ThesisCommissionDTO thesisCommissionDTO = ThesisCommissionDTO.builder()
@@ -61,8 +59,6 @@ public class ThesisDataGenerator {
 
         return StudentDTO.builder()
                 .studentId("random")
-                .full_name("Student " + random.nextInt(10))
-                .indexNumber("Index " + random.nextInt(1000))
                 .build();
     }
 

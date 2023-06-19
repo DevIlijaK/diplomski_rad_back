@@ -18,6 +18,7 @@ public class Professor {
     private Long id;
 
     private String professorId;
+    private String email;
 
     private String identificationNumber;
     private String fullName;

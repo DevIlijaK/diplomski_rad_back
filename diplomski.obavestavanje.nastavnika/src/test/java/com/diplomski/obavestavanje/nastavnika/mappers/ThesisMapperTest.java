@@ -40,8 +40,6 @@ public class ThesisMapperTest {
         assertEquals(thesisDTO.getThesisGrade(), thesis.getThesisGrade());
         assertEquals(thesisDTO.getThesisCommission().size(), thesis.getThesisCommission().size());
         assertEquals(thesisDTO.getStudent().getStudentId(), thesis.getStudent().getStudentId());
-        assertEquals(thesisDTO.getStudent().getFull_name(), thesis.getStudent().getFullName());
-        assertEquals(thesisDTO.getStudent().getIndexNumber(), thesis.getStudent().getIndexNumber());
     }
 }
 

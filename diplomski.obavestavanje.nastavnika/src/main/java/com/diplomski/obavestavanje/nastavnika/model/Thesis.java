@@ -26,10 +26,10 @@ public class Thesis {
     private Date thesisDateOfDefense;
     private Integer thesisGrade;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "thesis")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "thesis")
     private List<ThesisCommission> thesisCommission;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "studentId")
     private Student student;
 

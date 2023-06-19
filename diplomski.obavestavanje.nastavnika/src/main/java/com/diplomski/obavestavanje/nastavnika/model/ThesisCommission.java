@@ -23,8 +23,8 @@ public class ThesisCommission {
     @JoinColumn(name = "thesisId")
     private Thesis thesis;
 
-    @ManyToOne
-    @JoinColumn(name = "professorId")
+    @OneToOne
+    @JoinColumn(name = "professorId", referencedColumnName = "professorId")
     private Professor professor;
 
     // Constructors, getters, and setters

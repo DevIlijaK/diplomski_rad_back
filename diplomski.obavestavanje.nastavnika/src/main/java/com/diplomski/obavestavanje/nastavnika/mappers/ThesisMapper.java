@@ -19,17 +19,17 @@ public class ThesisMapper {
         thesis.setThesisDateOfDefense(dto.getThesisDateOfDefense());
         thesis.setThesisGrade(dto.getThesisGrade());
 
-        List<ThesisCommission> thesisCommissions = new ArrayList<>();
-        for (ThesisCommissionDTO commissionDTO : dto.getThesisCommission()) {
-            ThesisCommission commission = new ThesisCommission();
-            commission.setRole(commissionDTO.getRole());
-            commission.setThesis(thesis);
-            commission.setProfessor(ProfessorMapper.toProfessor(commissionDTO.getProfessor()));
-            thesisCommissions.add(commission);
-        }
-        thesis.setThesisCommission(thesisCommissions);
-
-        thesis.setStudent(StudentMapper.toStudent(dto.getStudent()));
+//        List<ThesisCommission> thesisCommissions = new ArrayList<>();
+//        for (ThesisCommissionDTO commissionDTO : dto.getThesisCommission()) {
+//            ThesisCommission commission = new ThesisCommission();
+//            commission.setRole(commissionDTO.getRole());
+//            commission.setThesis(thesis);
+//            commission.setProfessor(ProfessorMapper.toProfessor(commissionDTO.getProfessor()));
+//            thesisCommissions.add(commission);
+//        }
+//        thesis.setThesisCommission(thesisCommissions);
+//
+//        thesis.setStudent(StudentMapper.toStudent(dto.getStudent()));
         return thesis;
     }
 

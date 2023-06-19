@@ -1,60 +1,82 @@
 package com.diplomski.obavestavanje.nastavnika.service.Implementation;
 
+import com.diplomski.obavestavanje.nastavnika.dto.response.ThesisDTO;
+import com.diplomski.obavestavanje.nastavnika.mappers.ThesisMapper;
+import com.diplomski.obavestavanje.nastavnika.model.Professor;
 import com.diplomski.obavestavanje.nastavnika.model.Student;
 import com.diplomski.obavestavanje.nastavnika.model.Thesis;
+import com.diplomski.obavestavanje.nastavnika.model.ThesisCommission;
 import com.diplomski.obavestavanje.nastavnika.repository.ProfessorRepository;
 import com.diplomski.obavestavanje.nastavnika.repository.StudentRepository;
-import com.diplomski.obavestavanje.nastavnika.repository.ThesisProfessorRoleRepository;
 import com.diplomski.obavestavanje.nastavnika.repository.ThesisRepository;
 import com.diplomski.obavestavanje.nastavnika.service.ThesisService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ThesisServiceImpl implements ThesisService {
 
     private final ThesisRepository thesisRepository;
     private final ProfessorRepository professorRepository;
-    private final ThesisProfessorRoleRepository thesisProfessorRoleRepository;
     private final StudentRepository studentRepository;
 
-    @Transactional
-    public Thesis saveThesis(Thesis thesis) {
 
-        return thesisRepository.save(thesis);
-//        thesis.getThesisCommission().forEach(commision -> {
-//            Professor professor =
-//                    Professor.builder()
-//                            .professorId(commision.getProfessor().getProfessorId())
-//                            .identificationNumber(commision.getProfessor().getIdentificationNumber())
-//                            .fullName(commision.getProfessor().getFullName())
-//                            .build();
-//            Professor repositoryProfessor = professorRepository.findByIdentificationNumber(professor.getIdentificationNumber())
-//                    .orElseGet(() -> professorRepository.save(professor));
-//            ThesisProfessorRole thesisProfessorRole =
-//                    ThesisProfessorRole.builder()
-//                            .professor(repositoryProfessor)
-//                            .thesis(thesis)
-//                            .thesisProfessorRole(commision.getThesisProfessorRole())
-//                            .key(new ThesisProfessorRoleKey(thesis.getThesisId(), repositoryProfessor.getProfessorId() ))
-//                            .build();
-//
-//            thesisProfessorRoleRepository.save(thesisProfessorRole);
-//            System.out.println("proslo");
-//        });
-    }
-    public List<Thesis> returnAllByThesisDateOfDefenseBetween(Date startDate, Date endDate){
+    public List<Thesis> returnAllByThesisDateOfDefenseBetween(Date startDate, Date endDate) {
         return thesisRepository.findAllByThesisDateOfDefenseBetween(startDate, endDate);
     }
-    public List<Thesis> getAllThesis(){
+
+    public List<Thesis> setThesisWithCommissionAndStudent(List<ThesisDTO> thesisDTOList) {
+        List<Thesis> theses = new ArrayList<>();
+
+        for (ThesisDTO thesisDTO : thesisDTOList) {
+            Thesis thesis = ThesisMapper.toThesis(thesisDTO);
+            String studentId = thesisDTO.getStudent().getStudentId();
+            Student student = studentRepository.findByStudentId(studentId)
+                    .orElseThrow(() -> {
+                        String errorMessage = "Student not found with ID: " + studentId;
+                        log.error(errorMessage);
+                        return new RuntimeException(errorMessage);
+                    });
+            thesis.setStudent(student);
+
+            List<ThesisCommission> thesisCommissions = thesisDTO.getThesisCommission().stream()
+                    .map(thesisCommissionDTO -> {
+                        String professorId = thesisCommissionDTO.getProfessor().getProfessorId();
+                        Professor professor = professorRepository.findByProfessorId(professorId)
+                                .orElseThrow(() -> {
+                                    String errorMessage = "Professor not found with ID: " + professorId;
+                                    log.error(errorMessage);
+                                    return new RuntimeException(errorMessage);
+                                });
+
+                        ThesisCommission thesisCommission = new ThesisCommission();
+                        thesisCommission.setProfessor(professor);
+                        thesisCommission.setRole(thesisCommissionDTO.getRole());
+                        thesisCommission.setThesis(thesis);
+                        return thesisCommission;
+                    })
+                    .collect(Collectors.toList());
+
+            thesis.setThesisCommission(thesisCommissions);
+            theses.add(thesis);
+        }
+
+        return theses;
+    }
+
+
+    public List<Thesis> getAllThesis() {
         return thesisRepository.findAll();
     }
 
@@ -64,7 +86,18 @@ public class ThesisServiceImpl implements ThesisService {
                 .collect(Collectors.toList());
     }
 
-    private Thesis updateIfChanged(Thesis thesis) {
+    @Override
+    public List<Thesis> findThesesByProfessorAndDateRange(String email, Date startDate, Date endDate) {
+        log.info("EMAIL: " + email);
+        log.info("START DATE: " + startDate);
+        log.info("END DATE: " + endDate);
+        List<Thesis> thesesByProfessorAndDateRange = thesisRepository.findThesesByProfessorAndDateRange(email);
+        log.info("THESIS: " + thesesByProfessorAndDateRange);
+        return thesesByProfessorAndDateRange;
+    }
+
+    @Transactional
+    public Thesis updateIfChanged(Thesis thesis) {
         Thesis existingThesis = thesisRepository.findByThesisId(thesis.getThesisId());
 
         if (existingThesis != null) {
@@ -82,8 +115,6 @@ public class ThesisServiceImpl implements ThesisService {
                     }
                 }
             } catch (IllegalAccessException e) {
-                // Handle the reflection exception appropriately
-                // For example, log the exception and throw a custom exception
                 System.err.println("Error accessing fields through reflection: " + e.getMessage());
                 throw new RuntimeException("Failed to update thesis due to reflection error");
             }
@@ -92,7 +123,7 @@ public class ThesisServiceImpl implements ThesisService {
                 return thesisRepository.saveAndFlush(existingThesis);
             }
         }
-        return thesisRepository.saveAndFlush(thesis);
+        return thesisRepository.save(thesis);
     }
 
 

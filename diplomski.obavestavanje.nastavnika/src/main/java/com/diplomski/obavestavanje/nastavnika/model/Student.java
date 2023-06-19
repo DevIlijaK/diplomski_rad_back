@@ -28,5 +28,6 @@ public class Student {
             nullable = false
     )
     private String indexNumber;
+    private String email;
 
 }

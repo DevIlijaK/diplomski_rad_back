@@ -9,6 +9,7 @@ public class ProfessorMapper {
         professor.setProfessorId(dto.getProfessorId());
         professor.setIdentificationNumber(dto.getIdentificationNumber());
         professor.setFullName(dto.getFullName());
+        professor.setEmail(dto.getEmail());
         return professor;
     }
 

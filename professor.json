@@ -1,19 +1,22 @@
 {
-  "students": [
+  "professors": [
     {
-      "studentId": "S1",
-      "full_name": "John Doe",
-      "indexNumber": "123456"
+      "professorId": "P1",
+      "identificationNumber": "ID123",
+      "fullName": "Professor 1",
+      "email": "test@test"
     },
     {
-      "studentId": "S2",
-      "full_name": "Jane Smith",
-      "indexNumber": "654321"
+      "professorId": "P2",
+      "identificationNumber": "ID456",
+      "fullName": "Professor 2",
+      "email": "test1@test"
     },
     {
-      "studentId": "S3",
-      "full_name": "Alex Johnson",
-      "indexNumber": "987654"
+      "professorId": "P3",
+      "identificationNumber": "ID789",
+      "fullName": "Professor 3",
+      "email": "test1@test"
     }
   ]
 }

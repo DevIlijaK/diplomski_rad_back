@@ -54,7 +54,7 @@ public class ThesisController {
     }
 
     @PostMapping("find/thesis/by/professor/and/date/range")
-    public List<Thesis> findThesesByProfessorAndDateRange(
+    public List<ThesisDTO> findThesesByProfessorAndDateRange(
             @RequestBody FindThesesByProfessorAndDateRangeRequest findThesesByProfessorAndDateRangeRequest) {
         return thesisService.findThesesByProfessorAndDateRange(
                 findThesesByProfessorAndDateRangeRequest.getEmail(),

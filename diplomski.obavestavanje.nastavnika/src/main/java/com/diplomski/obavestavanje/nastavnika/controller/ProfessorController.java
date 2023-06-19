@@ -4,7 +4,6 @@ import com.diplomski.obavestavanje.nastavnika.dto.response.ProfessorDTO;
 import com.diplomski.obavestavanje.nastavnika.model.Professor;
 import com.diplomski.obavestavanje.nastavnika.service.ProfessorService;
 import lombok.AllArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -17,13 +17,19 @@ public interface ThesisRepository extends JpaRepository<Thesis, Long> {
             Date thesisRegistrationDateEnd
     );
 
-    @Query(value = "SELECT t.*, p.* " +
+    @Query(value = "SELECT t.*, p.*, s.* " +
             "FROM thesis t " +
             "JOIN thesis_commission tc ON tc.thesis_id = t.id " +
             "JOIN professor p ON p.professor_id = tc.professor_id " +
-            "WHERE p.email = :email",
+            "JOIN student s ON s.student_id = t.student_id " +
+            "WHERE p.email = :email " +
+            "AND t.thesis_date_of_defense BETWEEN :startDate AND :endDate",
             nativeQuery = true)
-    List<Thesis> findThesesByProfessorAndDateRange(@Param("email") String email);
+    List<Thesis> findThesesByProfessorAndDateRange(
+            @Param("email") String email,
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate
+    );
 
 
 }

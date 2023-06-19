@@ -19,13 +19,12 @@ public class ThesisCommission {
 
     private String role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "thesisId")
     private Thesis thesis;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "professorId", referencedColumnName = "professorId")
     private Professor professor;
 
-    // Constructors, getters, and setters
 }

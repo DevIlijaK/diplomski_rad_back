@@ -87,13 +87,16 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public List<Thesis> findThesesByProfessorAndDateRange(String email, Date startDate, Date endDate) {
+    public List<ThesisDTO> findThesesByProfessorAndDateRange(String email, Date startDate, Date endDate) {
         log.info("EMAIL: " + email);
         log.info("START DATE: " + startDate);
         log.info("END DATE: " + endDate);
-        List<Thesis> thesesByProfessorAndDateRange = thesisRepository.findThesesByProfessorAndDateRange(email);
+        List<Thesis> thesesByProfessorAndDateRange = thesisRepository.findThesesByProfessorAndDateRange(
+                email, startDate, endDate);
         log.info("THESIS: " + thesesByProfessorAndDateRange);
-        return thesesByProfessorAndDateRange;
+        return thesesByProfessorAndDateRange.stream()
+                .map(ThesisMapper::toThesisDTO)
+                .collect(Collectors.toList());
     }
 
     @Transactional

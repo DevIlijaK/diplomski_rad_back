@@ -16,8 +16,8 @@ public interface ThesisService {
     List<Thesis> filterDuplicates(List<Thesis> theses);
 
     List<ThesisDTO> findThesesByProfessorAndDateRange(String email,
-                                                   Date startDate,
-                                                   Date endDate);
+                                                      Date startDate,
+                                                      Date endDate);
 
 
 }

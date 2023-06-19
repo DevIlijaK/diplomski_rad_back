@@ -4,10 +4,20 @@ package com.diplomski.obavestavanje.nastavnika.config;
 import com.diplomski.obavestavanje.nastavnika.model.ApplicationUser.AppUser;
 import com.diplomski.obavestavanje.nastavnika.model.ApplicationUser.Role;
 import com.diplomski.obavestavanje.nastavnika.service.AppUserService;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
@@ -56,5 +66,23 @@ public class BeanConfig {
                 appUserService.addRoleToUser(username, randomRole);
             }
         };
+    }
+    @Bean
+    @Primary
+    ObjectMapper objectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new Jdk8Module());
+        mapper.registerModule(new GuavaModule());
+
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        mapper.configure(JsonGenerator.Feature.WRITE_BIGDECIMAL_AS_PLAIN, true);
+        mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(java.sql.Date.class, new CustomSqlDateDeserializer());
+        mapper.registerModule(module);
+
+        return mapper;
     }
 }

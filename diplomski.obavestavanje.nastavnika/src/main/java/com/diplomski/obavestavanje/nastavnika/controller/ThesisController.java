@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
+@Slf4j
 public class ThesisController {
 
     private static final String MAIN_PAGE = "main";
@@ -41,6 +43,7 @@ public class ThesisController {
         System.out.println(jsonNode);
         List<ThesisDTO> thesisDTOList = mapper.convertValue(jsonNode, new TypeReference<List<ThesisDTO>>() {
         });
+        log.info("THESIS DTO: " + thesisDTOList);
         List<Thesis> theses = thesisService.filterDuplicates(thesisService.setThesisWithCommissionAndStudent(thesisDTOList));
         System.out.println("THESISSSS: " + theses.get(0));
     }
@@ -56,11 +59,13 @@ public class ThesisController {
     @PostMapping("find/thesis/by/professor/and/date/range")
     public List<ThesisDTO> findThesesByProfessorAndDateRange(
             @RequestBody FindThesesByProfessorAndDateRangeRequest findThesesByProfessorAndDateRangeRequest) {
-        return thesisService.findThesesByProfessorAndDateRange(
+        List<ThesisDTO> thesesByProfessorAndDateRange = thesisService.findThesesByProfessorAndDateRange(
                 findThesesByProfessorAndDateRangeRequest.getEmail(),
                 findThesesByProfessorAndDateRangeRequest.getStartDate(),
                 findThesesByProfessorAndDateRangeRequest.getEndDate()
         );
+        log.info("THESIS DTO: " + thesesByProfessorAndDateRange);
+        return thesesByProfessorAndDateRange;
     }
 
     @GetMapping("get")

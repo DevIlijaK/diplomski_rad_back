@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.lang.reflect.Field;
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -128,6 +131,21 @@ public class ThesisServiceImpl implements ThesisService {
         }
         return thesisRepository.save(thesis);
     }
+
+//    public void formatThesisDates(List<Thesis> theses) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//
+//        for (Thesis thesis : theses) {
+//            String registrationDate = thesis.getThesisRegistrationDate().format(formatter);
+//            thesis.setThesisRegistrationDate(LocalDateTime.parse(registrationDate, formatter));
+//
+//            String submissionDate = thesis.getThesisDateOfSubmission().format(formatter);
+//            thesis.setThesisDateOfSubmission(LocalDateTime.parse(submissionDate, formatter));
+//
+//            String defenseDate = thesis.getThesisDateOfDefense().format(formatter);
+//            thesis.setThesisDateOfDefense(LocalDateTime.parse(defenseDate, formatter));
+//        }
+//    }
 
 
 }

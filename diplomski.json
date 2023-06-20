@@ -29,10 +29,91 @@
         }
       ],
       "student": {
+        "studentId": "S1"
+      }
+    },
+    {
+      "thesisId": "2",
+      "thesisType": "random",
+      "thesisTitle": "Random Thesis 1",
+      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
+      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
+      "thesisDateOfDefense": "2023-06-20T11:00:00Z",
+      "thesisGrade": "4",
+      "thesisCommission": [
+        {
+          "professor": {
+            "professorId": "P1"
+          },
+          "role": "comision member"
+        }
+      ],
+      "student": {
+        "studentId": "S3"
+      }
+    },
+    {
+      "thesisId": "3",
+      "thesisType": "random",
+      "thesisTitle": "Random Thesis 2",
+      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
+      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
+      "thesisDateOfDefense": "2023-06-20T12:00:00Z",
+      "thesisGrade": "2",
+      "thesisCommission": [
+        {
+          "professor": {
+            "professorId": "P1"
+          },
+          "role": "comision member"
+        }
+      ],
+      "student": {
         "studentId": "S2"
+      }
+    },
+    {
+      "thesisId": "5",
+      "thesisType": "random",
+      "thesisTitle": "Random Thesis 4",
+      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
+      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
+      "thesisDateOfDefense": "2023-06-20T14:00:00Z",
+      "thesisGrade": "1",
+      "thesisCommission": [
+        {
+          "professor": {
+            "professorId": "P1"
+          },
+          "role": "comision member"
+        }
+      ],
+      "student": {
+        "studentId": "S4"
+      }
+    },
+    {
+      "thesisId": "4",
+      "thesisType": "random",
+      "thesisTitle": "Random Thesis 3",
+      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
+      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
+      "thesisDateOfDefense": "2023-06-20T13:00:00Z",
+      "thesisGrade": "5",
+      "thesisCommission": [
+        {
+          "professor": {
+            "professorId": "P1"
+          },
+          "role": "comision member"
+        }
+      ],
+      "student": {
+        "studentId": "S3"
       }
     }
   ]
 }
+
 
 

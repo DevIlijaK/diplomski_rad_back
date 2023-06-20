@@ -5,18 +5,21 @@ import com.diplomski.obavestavanje.nastavnika.dto.response.ThesisDTO;
 import com.diplomski.obavestavanje.nastavnika.model.Thesis;
 import com.diplomski.obavestavanje.nastavnika.model.ThesisCommission;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThesisMapper {
     public static Thesis toThesis(ThesisDTO dto) {
         Thesis thesis = new Thesis();
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
         thesis.setThesisId(dto.getThesisId());
         thesis.setThesisType(dto.getThesisType());
         thesis.setThesisTitle(dto.getThesisTitle());
-        thesis.setThesisRegistrationDate(dto.getThesisRegistrationDate());
-        thesis.setThesisDateOfSubmission(dto.getThesisDateOfSubmission());
-        thesis.setThesisDateOfDefense(dto.getThesisDateOfDefense());
+        thesis.setThesisRegistrationDate(LocalDateTime.parse(dto.getThesisRegistrationDate(), formatter));
+        thesis.setThesisDateOfSubmission(LocalDateTime.parse(dto.getThesisDateOfSubmission(), formatter));
+        thesis.setThesisDateOfDefense(LocalDateTime.parse(dto.getThesisDateOfDefense(), formatter));
         thesis.setThesisGrade(dto.getThesisGrade());
 
 //        List<ThesisCommission> thesisCommissions = new ArrayList<>();
@@ -38,9 +41,9 @@ public class ThesisMapper {
         dto.setThesisId(thesis.getThesisId());
         dto.setThesisType(thesis.getThesisType());
         dto.setThesisTitle(thesis.getThesisTitle());
-        dto.setThesisRegistrationDate(thesis.getThesisRegistrationDate());
-        dto.setThesisDateOfSubmission(thesis.getThesisDateOfSubmission());
-        dto.setThesisDateOfDefense(thesis.getThesisDateOfDefense());
+        dto.setThesisRegistrationDate(String.valueOf(thesis.getThesisRegistrationDate()));
+        dto.setThesisDateOfSubmission(String.valueOf(thesis.getThesisDateOfSubmission()));
+        dto.setThesisDateOfDefense(String.valueOf(thesis.getThesisDateOfDefense()));
         dto.setThesisGrade(thesis.getThesisGrade());
 
         List<ThesisCommissionDTO> commissionDTOs = new ArrayList<>();

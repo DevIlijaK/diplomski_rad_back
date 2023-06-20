@@ -90,7 +90,7 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     @Override
-    public List<ThesisDTO> findThesesByProfessorAndDateRange(String email, Date startDate, Date endDate) {
+    public List<ThesisDTO> findThesesByProfessorAndDateRange(String email, LocalDateTime startDate, LocalDateTime endDate) {
         log.info("EMAIL: " + email);
         log.info("START DATE: " + startDate);
         log.info("END DATE: " + endDate);

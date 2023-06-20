@@ -14,6 +14,6 @@ import java.time.LocalDateTime;
 @Builder
 public class FindThesesByProfessorAndDateRangeRequest {
     private String email;
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 }

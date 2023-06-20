@@ -4,6 +4,7 @@ import com.diplomski.obavestavanje.nastavnika.dto.response.ThesisDTO;
 import com.diplomski.obavestavanje.nastavnika.model.Thesis;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ThesisService {
@@ -16,8 +17,8 @@ public interface ThesisService {
     List<Thesis> filterDuplicates(List<Thesis> theses);
 
     List<ThesisDTO> findThesesByProfessorAndDateRange(String email,
-                                                      Date startDate,
-                                                      Date endDate);
+                                                      LocalDateTime startDate,
+                                                      LocalDateTime endDate);
 
 
 }

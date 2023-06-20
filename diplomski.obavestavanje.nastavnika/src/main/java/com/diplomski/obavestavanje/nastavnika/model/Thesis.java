@@ -23,9 +23,9 @@ public class Thesis implements Serializable {
     private Long thesisId;
     private String thesisType;
     private String thesisTitle;
-    private Date thesisRegistrationDate;
-    private Date thesisDateOfSubmission;
-    private Date thesisDateOfDefense;
+    private LocalDateTime thesisRegistrationDate;
+    private LocalDateTime thesisDateOfSubmission;
+    private LocalDateTime thesisDateOfDefense;
     private Integer thesisGrade;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "thesis")

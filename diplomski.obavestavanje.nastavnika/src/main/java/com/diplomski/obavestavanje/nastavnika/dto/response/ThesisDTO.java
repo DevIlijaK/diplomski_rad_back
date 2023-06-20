@@ -17,9 +17,9 @@ public class ThesisDTO {
     private Long thesisId;
     private String thesisType;
     private String thesisTitle;
-    private Date thesisRegistrationDate;
-    private Date thesisDateOfSubmission;
-    private Date thesisDateOfDefense;
+    private String thesisRegistrationDate;
+    private String thesisDateOfSubmission;
+    private String thesisDateOfDefense;
     private Integer thesisGrade;
     private List<ThesisCommissionDTO> thesisCommission;
     private StudentDTO student;

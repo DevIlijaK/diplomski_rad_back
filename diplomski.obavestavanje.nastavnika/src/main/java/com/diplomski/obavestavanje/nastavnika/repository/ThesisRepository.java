@@ -28,8 +28,8 @@ public interface ThesisRepository extends JpaRepository<Thesis, Long> {
             nativeQuery = true)
     List<Thesis> findThesesByProfessorAndDateRange(
             @Param("email") String email,
-            @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
     );
 
 

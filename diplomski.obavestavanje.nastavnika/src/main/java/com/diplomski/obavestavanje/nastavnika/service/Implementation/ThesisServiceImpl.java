@@ -126,9 +126,11 @@ public class ThesisServiceImpl implements ThesisService {
             }
 
             if (hasChanged) {
-                return thesisRepository.saveAndFlush(existingThesis);
+                log.info("Uslo u changed");
+                return thesisRepository.save(existingThesis);
             }
         }
+        log.info("NIJE Uslo u changed");
         return thesisRepository.save(thesis);
     }
 

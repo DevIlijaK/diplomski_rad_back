@@ -111,6 +111,26 @@
       "student": {
         "studentId": "S3"
       }
+    },
+    {
+      "thesisId": "4",
+      "thesisType": "random",
+      "thesisTitle": "Random Thesis 3",
+      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
+      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
+      "thesisDateOfDefense": "2023-06-20T13:00:00Z",
+      "thesisGrade": "5",
+      "thesisCommission": [
+        {
+          "professor": {
+            "professorId": "P1"
+          },
+          "role": "RANDOM"
+        }
+      ],
+      "student": {
+        "studentId": "S3"
+      }
     }
   ]
 }

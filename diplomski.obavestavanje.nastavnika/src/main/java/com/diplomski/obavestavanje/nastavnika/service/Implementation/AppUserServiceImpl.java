@@ -54,13 +54,17 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
 
     @Override
     public String saveUser(AppUser user) {
-        log.info("Saving new user {} to database", user);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        log.info("Userrr" + user);
-        Collection<Role> roles = user.getRoles();
-        user.setRoles(new LinkedList<>());
-        appUserRepository.save(user);
-        roles.forEach(role -> addRoleToUser(user.getUsername(), role.getName()));
+        try {
+            log.info("Saving new user {} to database", user);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            log.info("Userrr" + user);
+            Collection<Role> roles = user.getRoles();
+            user.setRoles(new LinkedList<>());
+            appUserRepository.save(user);
+            roles.forEach(role -> addRoleToUser(user.getUsername(), role.getName()));
+        } catch (Exception e) {
+            throw new RuntimeException("Korisnik već postoji!");
+        }
         return "Upesno kreiran korisnik";
     }
 

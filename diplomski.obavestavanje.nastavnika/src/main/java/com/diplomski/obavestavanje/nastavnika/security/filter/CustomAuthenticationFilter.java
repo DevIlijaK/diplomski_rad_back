@@ -38,7 +38,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     private final AppUserServiceImpl appUserService;
     private final JWTTokenGenerateServiceImpl jwtTokenGenerateService;
 
-        @Override
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             UsernameAndPasswordAuthenticationRequest authRequest = getAuthRequest(request);
@@ -72,7 +72,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         Algorithm algorithm = Algorithm.HMAC256(jwtSecretKey.getSecretKey().toString());
         String accessToken = jwtTokenGenerateService.createAccessToken(user, algorithm, request);
         String refreshToken = jwtTokenGenerateService.createRefreshToken(user, algorithm, request);
-        AppUser appUser = appUserService.getUser(((User)authentication.getPrincipal()).getUsername());
+        AppUser appUser = appUserService.getUser(((User) authentication.getPrincipal()).getUsername());
         AppLoggedInUserDTO appUserDto = AppLoggedInUserDTO.builder()
                 .firstname(appUser.getFirstname())
                 .lastname(appUser.getLastname())

@@ -18,6 +18,7 @@ public class ProfessorMapper {
         dto.setProfessorId(professor.getProfessorId());
         dto.setIdentificationNumber(professor.getIdentificationNumber());
         dto.setFullName(professor.getFullName());
+        dto.setEmail(professor.getEmail());
         return dto;
     }
 }

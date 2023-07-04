@@ -3,20 +3,20 @@
     {
       "professorId": "P1",
       "identificationNumber": "ID123",
-      "fullName": "Professor 1",
-      "email": "test@test"
+      "fullName": "Dušan savić",
+      "email": "dusan.savic@fon.bg.ac.rs"
     },
     {
       "professorId": "P2",
       "identificationNumber": "ID456",
-      "fullName": "Professor 2",
-      "email": "test1@test"
+      "fullName": "Tatjana Stojanović",
+      "email": "tatjana.stojanovic@fon.bg.ac.rs"
     },
     {
       "professorId": "P3",
       "identificationNumber": "ID789",
-      "fullName": "Professor 3",
-      "email": "test1@test"
+      "fullName": "Ivan Milenković",
+      "email": "ivan.milenković@fon.bg.ac.rs"
     }
   ]
 }

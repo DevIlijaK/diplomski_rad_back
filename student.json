@@ -2,23 +2,13 @@
   "students": [
     {
       "studentId": "S1",
-      "full_name": "John Doe",
-      "indexNumber": "123456"
+      "full_name": "Ilija Košanin",
+      "indexNumber": "205/15"
     },
     {
       "studentId": "S2",
-      "full_name": "Jane Smith",
-      "indexNumber": "654321"
-    },
-    {
-      "studentId": "S3",
-      "full_name": "Alex Johnson",
-      "indexNumber": "987654"
-    },
-    {
-      "studentId": "S4",
-      "full_name": "Alex Johnson",
-      "indexNumber": "987654"
+      "full_name": "Nela Despotović",
+      "indexNumber": "64/18"
     }
   ]
 }

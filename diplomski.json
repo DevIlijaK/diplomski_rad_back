@@ -3,114 +3,88 @@
     {
       "thesisId": "1",
       "thesisType": "asd",
-      "thesisTitle": "asd",
+      "thesisTitle": "Razvoj veb aplikacije za obaveštavanje nastavnika o zakazanim odbranama završnih radova",
       "thesisRegistrationDate": "2012-04-23T18:25:43.511Z",
       "thesisDateOfSubmission": "2012-04-23T18:25:43.511Z",
-      "thesisDateOfDefense": "2023-06-19T18:25:43.511Z",
-      "thesisGrade": "3",
+      "thesisDateOfDefense": "2023-07-12T10:00:00.000Z",
+      "thesisGrade": "",
       "thesisCommission": [
         {
           "professor": {
-            "professorId": "P1"
+            "professorId": "P1",
+            "identificationNumber": "ID123",
+            "fullName": "Dušan Savić",
+            "email": "dusan.savic@fon.bg.ac.rs"
           },
-          "role": "comision member"
+          "role": "Mentor"
         },
         {
           "professor": {
-            "professorId": "P2"
+            "professorId": "P2",
+            "identificationNumber": "ID456",
+            "fullName": "Tatjana Stojanović",
+            "email": "tatjana.stojanovic@fon.bg.ac.rs"
           },
-          "role": "comision member"
+          "role": "Član komisije"
         },
         {
           "professor": {
-            "professorId": "P3"
+            "professorId": "P3",
+            "identificationNumber": "ID789",
+            "fullName": "Ivan Milenković",
+            "email": "ivan.milenković@fon.bg.ac.rs"
           },
-          "role": "comision member"
+          "role": "Član komisije"
         }
       ],
       "student": {
-        "studentId": "S1"
+        "studentId": "S1",
+        "full_name": "Ilija Košanin",
+        "indexNumber": "205/15"
       }
     },
     {
-      "thesisId": "2",
-      "thesisType": "random",
-      "thesisTitle": "Random Thesis 1",
-      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
-      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
-      "thesisDateOfDefense": "2023-06-20T11:00:00Z",
-      "thesisGrade": "4",
-      "thesisCommission": [
-        {
-          "professor": {
-            "professorId": "P1"
-          },
-          "role": "comision member"
-        }
-      ],
-      "student": {
-        "studentId": "S3"
+    "thesisId": "2",
+    "thesisType": "Završni rad",
+    "thesisTitle": "Razvoj veb aplikacije za prikaz",
+    "thesisRegistrationDate": "2012-04-23T18:25:43.511Z",
+    "thesisDateOfSubmission": "2012-04-23T18:25:43.511Z",
+    "thesisDateOfDefense": "2023-07-12T11:00:00.000Z",
+    "thesisGrade": "",
+    "thesisCommission": [
+      {
+        "professor": {
+          "professorId": "P1",
+          "identificationNumber": "ID123",
+          "fullName": "Dušan Savić",
+          "email": "dusan.savic@fon.bg.ac.rs"
+        },
+        "role": "Član komisije"
+      },
+      {
+        "professor": {
+          "professorId": "P2",
+          "identificationNumber": "ID456",
+          "fullName": "Tatjana Stojanović",
+          "email": "tatjana.stojanovic@fon.bg.ac.rs"
+        },
+        "role": "Član komisije"
+      },
+      {
+        "professor": {
+          "professorId": "P3",
+          "identificationNumber": "ID789",
+          "fullName": "Ivan Milenković",
+          "email": "ivan.milenković@fon.bg.ac.rs"
+        },
+        "role": "Mentor"
       }
-    },
-    {
-      "thesisId": "3",
-      "thesisType": "random",
-      "thesisTitle": "Random Thesis 2",
-      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
-      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
-      "thesisDateOfDefense": "2023-06-20T12:00:00Z",
-      "thesisGrade": "2",
-      "thesisCommission": [
-        {
-          "professor": {
-            "professorId": "P1"
-          },
-          "role": "comision member"
-        }
-      ],
-      "student": {
-        "studentId": "S2"
-      }
-    },
-    {
-      "thesisId": "5",
-      "thesisType": "random",
-      "thesisTitle": "Random Thesis 4",
-      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
-      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
-      "thesisDateOfDefense": "2023-06-20T14:00:00Z",
-      "thesisGrade": "1",
-      "thesisCommission": [
-        {
-          "professor": {
-            "professorId": "P1"
-          },
-          "role": "comision member"
-        }
-      ],
-      "student": {
-        "studentId": "S4"
-      }
-    },
-    {
-      "thesisId": "4",
-      "thesisType": "random",
-      "thesisTitle": "Random Thesis 3",
-      "thesisRegistrationDate": "2023-06-20T10:00:00Z",
-      "thesisDateOfSubmission": "2023-06-20T10:00:00Z",
-      "thesisDateOfDefense": "2023-06-20T13:00:00Z",
-      "thesisGrade": "5",
-      "thesisCommission": [
-        {
-          "professor": {
-            "professorId": "P1"
-          },
-          "role": "comision member"
-        }
-      ],
-      "student": {
-        "studentId": "S3"
-      }
+    ],
+    "student": {
+      "studentId": "S2",
+      "full_name": "Nela Despotović",
+      "indexNumber": "64/18"
+    }
     }
   ]
 }

@@ -46,26 +46,32 @@ public class BeanConfig {
             appUserService.saveRole(new Role(null, "ROLE_PROFESSOR"));
             appUserService.saveRole(new Role(null, "ROLE_STUDENT"));
 
-            appUserService.saveUser(new AppUser(null, "asd", "asd", "asd", "asd", "asd", new ArrayList<>()));
+            appUserService.saveUser(new AppUser(null, "ilija", "Kosanin", "ilija@gmail.com", "televizor123", "ilija@gmail.com", new ArrayList<>()));
+            appUserService.saveUser(new AppUser(null, "Dušan", "Savić", "dusan.savic@fon.bg.ac.rs", "televizor123", "dusan.savic@fon.bg.ac.rs", new ArrayList<>()));
+            appUserService.saveUser(new AppUser(null, "Tatjana", "Stojanović", "tatjana.stojanovic@fon.bg.ac.rs", "123", "tatjana.stojanovic@fon.bg.ac.rs", new ArrayList<>()));
+            appUserService.saveUser(new AppUser(null, "Ivan", "Milenković", "ivan.milenković@fon.bg.ac.rs", "123", "ivan.milenković@fon.bg.ac.rs", new ArrayList<>()));
 
-            appUserService.addRoleToUser("asd", "ROLE_ADMIN");
+            appUserService.addRoleToUser("ilija@gmail.com", "ROLE_ADMIN");
+            appUserService.addRoleToUser("dusan.savic@fon.bg.ac.rs", "ROLE_PROFESSOR");
+            appUserService.addRoleToUser("tatjana.stojanovic@fon.bg.ac.rs", "ROLE_PROFESSOR");
+            appUserService.addRoleToUser("ivan.milenković@fon.bg.ac.rs", "RROLE_PROFESSOR");
             List<String> roles = Arrays.asList("ROLE_ADMIN", "ROLE_PROFESSOR", "ROLE_STUDENT");
-            Random random = new Random();
-            for (int i = 1; i <= 20; i++) {
-                String username = "user" + i;
-                String password = "password" + i;
-                String firstName = "firstName" + i;
-                String lastName = "lastName" + i;
-                String email = username + "@example.com";
-
-                AppUser user = new AppUser(null, firstName, lastName, username, password, email, new ArrayList<>());
-                appUserService.saveUser(user);
-
-                int randomIndex = random.nextInt(roles.size());
-                String randomRole = roles.get(randomIndex);
-                log.info("Role" + randomRole);
-                appUserService.addRoleToUser(username, randomRole);
-            }
+//            Random random = new Random();
+//            for (int i = 1; i <= 20; i++) {
+//                String username = "user" + i;
+//                String password = "password" + i;
+//                String firstName = "firstName" + i;
+//                String lastName = "lastName" + i;
+//                String email = username + "@example.com";
+//
+//                AppUser user = new AppUser(null, firstName, lastName, username, password, email, new ArrayList<>());
+//                appUserService.saveUser(user);
+//
+//                int randomIndex = random.nextInt(roles.size());
+//                String randomRole = roles.get(randomIndex);
+//                log.info("Role" + randomRole);
+//                appUserService.addRoleToUser(username, randomRole);
+//            }
         };
     }
     @Bean

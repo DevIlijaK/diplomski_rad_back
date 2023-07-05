@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ThesisService {
-    List<Thesis> setThesisWithCommissionAndStudent(List<ThesisDTO> thesisDTO);
+    void setThesisWithCommissionAndStudent(List<ThesisDTO> thesisDTO);
 
     List<Thesis> returnAllByThesisDateOfDefenseBetween(Date startDate, Date endDate);
 

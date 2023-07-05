@@ -15,19 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Field;
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class ThesisServiceImpl implements ThesisService {
 
     private final ThesisRepository thesisRepository;
@@ -39,10 +36,15 @@ public class ThesisServiceImpl implements ThesisService {
         return thesisRepository.findAllByThesisDateOfDefenseBetween(startDate, endDate);
     }
 
-    public List<Thesis> setThesisWithCommissionAndStudent(List<ThesisDTO> thesisDTOList) {
-        List<Thesis> theses = new ArrayList<>();
+    public void setThesisWithCommissionAndStudent(List<ThesisDTO> thesisDTOList) {
 
         for (ThesisDTO thesisDTO : thesisDTOList) {
+
+            Optional<Thesis> byThesisId = thesisRepository.findByThesisId(thesisDTO.getThesisId());
+            if(byThesisId.isPresent()){
+                throw new RuntimeException();
+            }
+
             Thesis thesis = ThesisMapper.toThesis(thesisDTO);
             String studentId = thesisDTO.getStudent().getStudentId();
             Student student = studentRepository.findByStudentId(studentId)
@@ -72,10 +74,9 @@ public class ThesisServiceImpl implements ThesisService {
                     .collect(Collectors.toList());
 
             thesis.setThesisCommission(thesisCommissions);
-            theses.add(thesis);
+            thesisRepository.save(thesis);
         }
 
-        return theses;
     }
 
 
@@ -84,6 +85,7 @@ public class ThesisServiceImpl implements ThesisService {
     }
 
     public List<Thesis> filterDuplicates(List<Thesis> theses) {
+
         return theses.stream()
                 .map(this::updateIfChanged)
                 .collect(Collectors.toList());
@@ -104,33 +106,33 @@ public class ThesisServiceImpl implements ThesisService {
 
     @Transactional
     public Thesis updateIfChanged(Thesis thesis) {
-        Thesis existingThesis = thesisRepository.findByThesisId(thesis.getThesisId());
-
-        if (existingThesis != null) {
-            boolean hasChanged = false;
-            try {
-                Field[] fields = Thesis.class.getDeclaredFields();
-                for (Field field : fields) {
-                    field.setAccessible(true);
-                    Object existingValue = field.get(existingThesis);
-                    Object newValue = field.get(thesis);
-
-                    if (!Objects.equals(existingValue, newValue)) {
-                        field.set(existingThesis, newValue);
-                        hasChanged = true;
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                System.err.println("Error accessing fields through reflection: " + e.getMessage());
-                throw new RuntimeException("Failed to update thesis due to reflection error");
-            }
-
-            if (hasChanged) {
-                log.info("Uslo u changed");
-                return thesisRepository.save(existingThesis);
-            }
-        }
-        log.info("NIJE Uslo u changed");
+//        Optional<Thesis> byThesisId = thesisRepository.findByThesisId(thesis.getThesisId());
+//
+//        if (byThesisId.isPresent()) {
+//            boolean hasChanged = false;
+//            try {
+//                Field[] fields = Thesis.class.getDeclaredFields();
+//                for (Field field : fields) {
+//                    field.setAccessible(true);
+//                    Object existingValue = field.get(byThesisId);
+//                    Object newValue = field.get(thesis);
+//
+//                    if (!Objects.equals(existingValue, newValue)) {
+//                        field.set(byThesisId, newValue);
+//                        hasChanged = true;
+//                    }
+//                }
+//            } catch (IllegalAccessException e) {
+//                System.err.println("Error accessing fields through reflection: " + e.getMessage());
+//                throw new RuntimeException("Failed to update thesis due to reflection error");
+//            }
+//
+//            if (hasChanged) {
+//                log.info("Uslo u changed");
+//                return thesisRepository.save(byThesisId);
+//            }
+//        }
+//        log.info("NIJE Uslo u changed");
         return thesisRepository.save(thesis);
     }
 

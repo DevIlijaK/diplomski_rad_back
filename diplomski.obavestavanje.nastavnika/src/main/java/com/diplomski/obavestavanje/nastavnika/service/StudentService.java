@@ -2,7 +2,6 @@ package com.diplomski.obavestavanje.nastavnika.service;
 
 import com.diplomski.obavestavanje.nastavnika.dto.response.StudentDTO;
 import com.diplomski.obavestavanje.nastavnika.model.Student;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

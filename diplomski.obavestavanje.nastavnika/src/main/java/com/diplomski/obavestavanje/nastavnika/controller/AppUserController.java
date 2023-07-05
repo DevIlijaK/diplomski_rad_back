@@ -51,7 +51,7 @@ public class AppUserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> saveUsers(@RequestBody AppUser appUser) {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(appUserService.saveUser(appUser));
+        return ResponseEntity.created(uri).body("OK");
     }
 
     @PostMapping("/role/save")

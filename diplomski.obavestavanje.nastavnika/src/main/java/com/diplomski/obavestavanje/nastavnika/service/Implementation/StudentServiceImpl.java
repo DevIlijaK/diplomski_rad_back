@@ -10,14 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
@@ -25,23 +26,22 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void saveOrUpdateStudents(List<Student> students) {
         for (Student student : students) {
-            // Check if the student exists in the repository by studentId
-            Optional<Student> byStudentId = studentRepository.findByStudentId(student.getStudentId());
+            Optional<Student> studentByEmail = studentRepository.findByEmail(student.getEmail());
 
-            if (byStudentId.isPresent()) {
-                // Student exists in the repository
-                Student existingStudent = byStudentId.get();
+            if (studentByEmail.isPresent()) {
+                log.info("Nasao je studenta" + studentByEmail);
+                Student existingStudent = studentByEmail.get();
 
-                // Check if any changes were made
                 boolean hasChanges = checkForChanges(student, existingStudent);
+                log.info("Pronasao je promene" + hasChanges);
 
                 if (hasChanges) {
-                    // Update the existing student with the new values
-                    updateStudent(student, existingStudent);
+                    updateStudent(existingStudent, student);
+                    log.info("updejtova je studenta" + student);
                     studentRepository.save(existingStudent);
+                    log.info("updejtova je studenta");
                 }
             } else {
-                // Student doesn't exist in the repository
                 studentRepository.save(student);
             }
         }
@@ -52,13 +52,13 @@ public class StudentServiceImpl implements StudentService {
             log.error("Invalid input: Both oldStudent and newStudent must not be null.");
             throw new IllegalArgumentException("Invalid input: Both oldStudent and newStudent must not be null.");
         }
-        boolean hasChanged = !Objects.equals(oldStudent.getStudentId(), newStudent.getStudentId());
+        boolean hasChanged = oldStudent.getStudentId().equals(newStudent.getStudentId());
 
-        if (!Objects.equals(oldStudent.getFullName(), newStudent.getFullName())) {
+        if (!oldStudent.getFullName().equals(newStudent.getFullName())) {
             hasChanged = true;
         }
 
-        if (!Objects.equals(oldStudent.getIndexNumber(), newStudent.getIndexNumber())) {
+        if (oldStudent.getIndexNumber().equals(newStudent.getIndexNumber())) {
             hasChanged = true;
         }
 
@@ -67,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private void updateStudent(Student olsStudent, Student newStudent) {
-        BeanUtils.copyProperties(newStudent, olsStudent, "studentId");
+        BeanUtils.copyProperties(newStudent, olsStudent, "id", "studentId");
     }
 
     @Override
@@ -81,4 +81,5 @@ public class StudentServiceImpl implements StudentService {
 
         return students;
     }
+
 }

@@ -44,8 +44,7 @@ public class ThesisController {
         List<ThesisDTO> thesisDTOList = mapper.convertValue(jsonNode, new TypeReference<List<ThesisDTO>>() {
         });
         log.info("THESIS DTO: " + thesisDTOList);
-        List<Thesis> theses = thesisService.filterDuplicates(thesisService.setThesisWithCommissionAndStudent(thesisDTOList));
-        System.out.println("THESISSSS: " + theses.get(0));
+        thesisService.setThesisWithCommissionAndStudent(thesisDTOList);
     }
 
     @GetMapping("find/{startPeriod}/{endPerion}")

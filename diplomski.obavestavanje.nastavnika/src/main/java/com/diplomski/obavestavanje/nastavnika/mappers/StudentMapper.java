@@ -11,6 +11,7 @@ public class StudentMapper {
         student.setStudentId(dto.getStudentId());
         student.setFullName(dto.getFull_name());
         student.setIndexNumber(dto.getIndexNumber());
+        student.setEmail(dto.getEmail());
         return student;
     }
 

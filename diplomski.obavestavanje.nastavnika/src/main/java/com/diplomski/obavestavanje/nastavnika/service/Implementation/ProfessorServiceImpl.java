@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,29 +19,28 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class ProfessorServiceImpl implements ProfessorService {
     private final ProfessorRepository professorRepository;
 
     @Override
     public void saveOrUpdateProfessors(List<Professor> professors) {
         for (Professor professor : professors) {
-            // Check if the professor exists in the repository by professorId
-            Optional<Professor> byProfessorId = professorRepository.findByProfessorId(professor.getProfessorId());
+            Optional<Professor> professorByEmail= professorRepository.findByEmail(professor.getEmail());
+            log.info("PRONASAO JE PROFESORA" + professorByEmail);
 
-            if (byProfessorId.isPresent()) {
-                // Professor exists in the repository
-                Professor existingProfessor = byProfessorId.get();
+            if (professorByEmail.isPresent()) {
+                Professor existingProfessor = professorByEmail.get();
 
-                // Check if any changes were made
                 boolean hasChanges = checkForChanges(professor, existingProfessor);
+                log.info("POSTOJE IZMENE" + hasChanges);
 
                 if (hasChanges) {
-                    // Update the existing professor with the new values
-                    updateProfessor(professor, existingProfessor);
+                    updateProfessor(existingProfessor, professor);
+                    log.info("UPDEJTOVAN PROFESOR" + existingProfessor);
                     professorRepository.save(existingProfessor);
                 }
             } else {
-                // Professor doesn't exist in the repository
                 professorRepository.save(professor);
             }
         }
@@ -51,13 +51,13 @@ public class ProfessorServiceImpl implements ProfessorService {
             log.error("Invalid input: Both oldProfessor and newProfessor must not be null.");
             throw new IllegalArgumentException("Invalid input: Both oldProfessor and newProfessor must not be null.");
         }
-        boolean hasChanged = !Objects.equals(oldProfessor.getProfessorId(), newProfessor.getProfessorId());
+        boolean hasChanged = oldProfessor.getProfessorId().equals(newProfessor.getProfessorId());
 
-        if (!Objects.equals(oldProfessor.getFullName(), newProfessor.getFullName())) {
+        if (!oldProfessor.getFullName().equals(newProfessor.getFullName())) {
             hasChanged = true;
         }
 
-        if (!Objects.equals(oldProfessor.getIdentificationNumber(), newProfessor.getIdentificationNumber())) {
+        if (!oldProfessor.getIdentificationNumber().equals( newProfessor.getIdentificationNumber())) {
             hasChanged = true;
         }
 
@@ -66,7 +66,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     private void updateProfessor(Professor oldProfessor, Professor newProfessor) {
-        BeanUtils.copyProperties(newProfessor, oldProfessor, "professorId");
+        BeanUtils.copyProperties(newProfessor, oldProfessor, "id", "professorId");
     }
 
 

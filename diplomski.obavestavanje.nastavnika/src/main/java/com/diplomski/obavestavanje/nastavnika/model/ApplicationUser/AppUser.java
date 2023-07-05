@@ -1,5 +1,7 @@
 package com.diplomski.obavestavanje.nastavnika.model.ApplicationUser;
 
+import com.diplomski.obavestavanje.nastavnika.model.Professor;
+import com.diplomski.obavestavanje.nastavnika.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

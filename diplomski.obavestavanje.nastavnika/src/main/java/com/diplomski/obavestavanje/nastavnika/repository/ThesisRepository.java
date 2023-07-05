@@ -5,13 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.swing.text.html.Option;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ThesisRepository extends JpaRepository<Thesis, Long> {
     List<Thesis> findAllByThesisRegistrationDate(Date thesisRegistrationDate);
-    Thesis findByThesisId(Long thesisId);
+    Optional<Thesis> findByThesisId(Long thesisId);
 
     List<Thesis> findAllByThesisDateOfDefenseBetween(
             Date thesisReqistrationDateStart,

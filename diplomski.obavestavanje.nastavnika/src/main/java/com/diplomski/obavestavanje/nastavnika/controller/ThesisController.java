@@ -28,7 +28,6 @@ import java.util.List;
 @Slf4j
 public class ThesisController {
 
-    private static final String MAIN_PAGE = "main";
     private static final String JSON_URL = "http://localhost:3000/thesis";
 
     private final ParsingService parsingService;

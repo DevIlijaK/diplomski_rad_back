@@ -32,7 +32,7 @@ public class Professor extends EmployeeEntity implements Serializable {
             nullable = false
     )
     private String email;
-    
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appUser", referencedColumnName = "email")
     private AppUser appUser;

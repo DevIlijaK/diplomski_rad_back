@@ -16,7 +16,13 @@
       "professorId": "P3",
       "identificationNumber": "ID789",
       "fullName": "Ivan Milenković",
-      "email": "ivan.milenković@fon.bg.ac.rs"
+      "email": "ivan.milenkovic@fon.bg.ac.rs"
+    },
+    {
+      "professorId": "P3",
+      "identificationNumber": "ID781239",
+      "fullName": "Ivan123 Milenković",
+      "email": "ivan.milenkovic@fon.bg.ac.rs"
     }
   ]
 }

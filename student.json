@@ -3,12 +3,20 @@
     {
       "studentId": "S1",
       "full_name": "Ilija Košanin",
-      "indexNumber": "205/15"
+      "indexNumber": "205/15",
+      "email": "ilija@fon.bg.ac.rs"
     },
     {
       "studentId": "S2",
       "full_name": "Nela Despotović",
-      "indexNumber": "64/18"
+      "indexNumber": "64/18",
+      "email": "nela@fon.bg.ac.rs"
+    },
+    {
+      "studentId": "S2",
+      "full_name": "Nela Despotović",
+      "indexNumber": "64/18",
+      "email": "nela@fon.bg.ac.rs"
     }
   ]
 }

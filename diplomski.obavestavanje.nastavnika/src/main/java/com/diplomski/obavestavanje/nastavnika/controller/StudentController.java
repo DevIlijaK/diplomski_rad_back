@@ -27,7 +27,6 @@ public class StudentController {
     @GetMapping("/students")
 //    @Scheduled(cron = "*/10 * * * * *")
     public boolean fetchAllStudents() {
-        // Perform GET request to fetch all students
         StudentDTO[] studentsDTO = restTemplate.getForObject(JSON_URL, StudentDTO[].class);
         List<Student> students = studentService.translateToStudents(studentsDTO);
         studentService.saveOrUpdateStudents(students);

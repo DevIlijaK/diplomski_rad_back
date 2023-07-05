@@ -25,7 +25,6 @@ public class ProfessorController {
     @GetMapping("/professors")
 //    @Scheduled(cron = "*/10 * * * * *")
     public void fetchAllProfessors() {
-        // Perform GET request to fetch all professors
         ProfessorDTO[] professorsDTO = restTemplate.getForObject(JSON_URL, ProfessorDTO[].class);
         List<Professor> professors = professorService.translateToProfessors(professorsDTO);
         professorService.saveOrUpdateProfessors(professors);
